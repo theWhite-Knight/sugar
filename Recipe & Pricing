@@ -1,0 +1,15 @@
+import shop.py
+
+def whattodo():
+  print("What would you like to do?")
+  when = input("(1) Shop, (2) Change price, (3) Start the day - ")
+
+  if when == "1":
+    print("You have entered the shop!")
+    import shop.py.shop()
+  if when == "2":
+    print("You have decided to change the price of your lemonade!")
+    l_set = int(input("print("?"))
+  
+
+whattodo()
