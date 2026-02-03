@@ -26,7 +26,7 @@ ingredients = {
 def shop():
     global money
     global ingredients
-    print("You have entered the shop!") # Takes count of what the user wants >>
+    print("\nYou have entered the shop!") # Takes count of what the user wants >>
     print("------------------------------------------------------")
     when = input("What would you like to purchase? \
 (1) Lemons [1.99 per], (2) Sugar [0.60 per lb], (3) Cups [0.50 per], (4) Ice [0.99 per lb]:\n" "Enter EXIT to exit.\n")
@@ -65,7 +65,7 @@ def shop():
         elif amount*icePrice <= money:
             money = money-amount*icePrice
             ingredients["Ice"] += amount
-    if when == "EXIT":
+    if when == "EXIT" or "exit":
         print(f"Your balance is: {money}")
         sys.exit()
 #-------
@@ -76,7 +76,8 @@ if money <= 0:
     sys.exit()
 #-------
 while True:
-    print(f"You have {ingredients}.")
+    print(f"\nYou have {ingredients}.")
+    print(">>>")
     print(f"You have {money} dollar(s).")
     shop()
 #-------
