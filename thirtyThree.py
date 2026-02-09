@@ -65,10 +65,9 @@ def shop():
         elif amount*icePrice <= money:
             money = money-amount*icePrice
             ingredients["Ice"] += amount
-    if when == "EXIT" or "exit":
+    if when.lower() == "exit":
         print(f"Your balance is: {money}")
-        sys.exit()
-#-------
+        return -1#-------
 if money <= 0:
     print("You lost!")
     print("------------------")
@@ -79,7 +78,8 @@ while True:
     print(f"\nYou have {ingredients}.")
     print(">>>")
     print(f"You have {money} dollar(s).")
-    shop()
+    if shop() == -1:
+        break
 #-------
 print("------------------------------------------------------")
 # Did you know that your brain is constantly eating itself? No context.
