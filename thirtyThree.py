@@ -67,7 +67,8 @@ def shop():
             ingredients["Ice"] += amount
     if when.lower() == "exit":
         print(f"Your balance is: {money}")
-        return -1#-------
+        return -1
+#-------
 if money <= 0:
     print("You lost!")
     print("------------------")
