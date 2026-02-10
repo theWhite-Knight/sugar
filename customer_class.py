@@ -4,9 +4,8 @@
 # and a price point they are willing to pay.
 # All of these attributes will influence their purchasing decision and
 # are returned as a list of attributes.
-
 import random
-
+#-------
 class Customer:
     def __init__(self, sweetness_preference=None, ice_preference=None, price_point=None):
         self.sweetness_preference = (
@@ -21,10 +20,10 @@ class Customer:
             price_point if price_point is not None
             else round(random.uniform(0.25, 4.0),2)
         )
-
+#-------
     def get_customer_attributes(self):
         return {
-            "sweetness": self.sweetness_preference,
+            "sugar": self.sweetness_preference,
             "ice": self.ice_preference,
             "price": self.price_point
         }
