@@ -1,7 +1,7 @@
 # ALex's take on "Ingredients and Money"
 #-------
 import sys
-# Money
+# Money 
 money = 200
 #-------
 # Ingredients
