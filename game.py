@@ -1,2 +1,1 @@
-def loop(money):
-    
+def unknown(money):

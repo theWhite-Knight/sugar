@@ -1,11 +1,22 @@
 import sys
-
-
-def o(money,ingredients,shop):
+import time
+from welcomeToShop import shop
+#-------
+#-------
+def startday():
+    print("Starting the day!")
+    print("selling...")
+    time.sleep(1)
+    print("selling...")
+    time.sleep(1)
+    print("selling...")
+    time.sleep(1)
+#-------
+def enter1(money,ingredients,shop):
     play = input("Would you like to enter the shop? - ")
-
-    if play == "Yes" or "yes" or "Y" or "y" or "ok" or "Ok":
+    if play.lower == "yes" or play.lower == "ok" or play.lower == "y":
         print("Entering shop...")
+        welcomeToShop.shop()
         exit_code = 0
         while True:
             print(f"\nYou have {ingredients}.")
@@ -14,14 +25,13 @@ def o(money,ingredients,shop):
             money, exit_code = shop(ingredients,money)
             if exit_code == -1:
                 break
-
-    if play == "no" or "No" or "n" or "N":
+    #-------
+    if play.lower == "no" or play.lower == "nope" or play.lower == "n":
         print("Cancelling...")
-
-
+    #-------
     if money <= 0:
         print("You lost!")
         print("------------------")
         print("GAME OVER!")
         sys.exit()
-
+#-------
