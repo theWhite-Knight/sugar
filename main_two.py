@@ -1,9 +1,10 @@
 #-------
 import time
 import sys
+
 from welcomeToShop import shop
-from recipe_pricing import change
-from recipe_pricing import price
+from recipe import change
+from recipe import price
 from enter import enter1
 from enter import startday
 #-------
@@ -18,7 +19,9 @@ ingredients = {
 money = 200
 day = 1
 #-------
-def game(money,ingredients):
+LemonSet = 0
+
+def game(LemonSet,money,ingredients):
     what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day.\n")
     #-------
     if what == "1":
@@ -28,7 +31,19 @@ def game(money,ingredients):
         price(money)
     elif what == "3":
         print("You chose to change your lemonade recipe")
-        change(money)
+        LemonSet = int(input("What would you like to set your lemonade price to?\n "))
+        if LemonSet <= .01:
+            print(f"You set your lemonade price to {LemonSet}!")
+        elif LemonSet <= 0:
+            print("Please try again...")
+            what()
+        elif TypeError:
+            print("Please try again...")
+            what()
+        else:
+            print("Please try again...")
+            what()    
+        
     elif what == "4":
         startday()
     else:
