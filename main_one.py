@@ -2,6 +2,8 @@ import time
 import sys
 #-------
 from main_two import game
+import main_two
+import enter
 #-------
 ingredients = {
     "Lemons": 0,
@@ -17,9 +19,10 @@ print("★~ The Lemonade Stand Game ~★")
 print("------------------------------")
 p = input("Would you like to play the game? (Y/N)\n")
 #-------
-if p.lower == "y":
+if p.lower() == "y":
     print("Starting game...")
-    game(money,ingredients)    
+    game(money,ingredients)
+ 
 else:
     print("Try again")
     sys.exit()

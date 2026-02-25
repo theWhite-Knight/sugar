@@ -1,6 +1,7 @@
 import sys
 import time
 from welcomeToShop import shop
+import main_two
 #-------
 #-------
 def startday():
@@ -16,7 +17,7 @@ def enter1(money,ingredients,shop):
     play = input("Would you like to enter the shop? - ")
     if play.lower == "yes" or play.lower == "ok" or play.lower == "y":
         print("Entering shop...")
-        welcomeToShop.shop()
+        shop()
         exit_code = 0
         while True:
             print(f"\nYou have {ingredients}.")

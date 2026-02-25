@@ -20,11 +20,11 @@ day = 1
 #-------
 LemonSet = 0
 
-def game(LemonSet,money,ingredients):
+def game(money,ingredients):
     what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day.\n")
     #-------
     if what == "1":
-        enter1(money,ingredients,shop)
+        enter1(shop)
     elif what == "2":
         print("You chose to change your recipe")
         price(money)
@@ -36,9 +36,9 @@ def game(LemonSet,money,ingredients):
         elif LemonSet <= 0:
             print("Please try again...")
             what()
-        elif TypeError:
+        if ValueError:
             print("Please try again...")
-            what()
+            what()  
         else:
             print("Please try again...")
             what()    
