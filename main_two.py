@@ -3,11 +3,10 @@ import time
 import sys
 
 from welcomeToShop import shop
-from recipe import change
 from recipe import price
 from enter import enter1
 from enter import startday
-#-------
+
 #-------
 ingredients = {
     "Lemons": 0,
