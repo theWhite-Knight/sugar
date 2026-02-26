@@ -1,3 +1,8 @@
+
+import main_one
+
+from main_two import what
+
 Usage = {}
 
 def price(money):
@@ -7,9 +12,9 @@ def price(money):
     while True:
         item = input("What would you like to add to your recipe? ")
         if item.lower() == 'done':
-            break
+            what()
         recipe_items.append(item)
         print(f"Added: {item}")
     
     Usage["recipe"] = recipe_items
-    print(f"Your recipe has been saved: {Usage}")
+    print(f"Your Item was added to you Recipe: {Usage}")

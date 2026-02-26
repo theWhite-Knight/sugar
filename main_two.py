@@ -2,6 +2,8 @@
 import time
 import sys
 
+
+import main_one
 from welcomeToShop import shop
 from recipe import price
 from enter import enter1
