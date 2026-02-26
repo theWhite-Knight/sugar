@@ -1,9 +1,15 @@
 Usage = {}
 
-
-
 def price(money):
-  lemonset = input("What would your price like to be?\n")
-  if lemonset <= -1:
-    print("Please try again!")
-    price(money)
+    global Usage
+    recipe_items = []
+    print("Enter your recipe items (type 'done' when finished):")
+    while True:
+        item = input("What would you like to add to your recipe? ")
+        if item.lower() == 'done':
+            break
+        recipe_items.append(item)
+        print(f"Added: {item}")
+    
+    Usage["recipe"] = recipe_items
+    print(f"Your recipe has been saved: {Usage}")
