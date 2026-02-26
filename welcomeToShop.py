@@ -1,7 +1,6 @@
 # ALex's take on "Ingredients and Money"
 #-------
 import sys
-
 # Cost of ingredients.
 lemonPrice = 1.99
 sugarPrice = 0.60
