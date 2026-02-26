@@ -1,7 +1,7 @@
 import time
 import sys
 #-------
-from welcomeToShop import shop
+from filler import enterShop
 from recipe import price
 #-------
 money = 200
@@ -32,12 +32,13 @@ if p.lower() == "y":
     time.sleep(1)
     print("1...")
     time.sleep(1)
-    def game(money,ingredients):
+    
+    def game():
         if day <= 1:
             what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day.\n")
             #-------
             if what == "1":
-                enter1(shop)
+                enterShop()
             elif what == "2":
                 print("You chose to change your recipe")
                 price(money)
@@ -67,36 +68,11 @@ if p.lower() == "y":
                     print("selling...")
                     time.sleep(1)
                     day += 1
-
-                #-------
-                def enter1(money,ingredients,shop):
-                    play = input("Would you like to enter the shop? - ")
-                    if play.lower == "yes" or play.lower == "ok" or play.lower == "y":
-                        print("Entering shop...")
-                        shop()
-                        exit_code = 0
-                        while True:
-                            print(f"\nYou have {ingredients}.")
-                            print(">>>")
-                            print(f"You have {money} dollars.")
-                            money, exit_code = shop(ingredients,money)
-                            if exit_code == -1:
-                                break
-                    #-------
-                    if play.lower == "no" or play.lower == "nope" or play.lower == "n":
-                        print("Cancelling...")
-                    #-------
-                    if money <= 0:
-                        print("You lost!")
-                        print("------------------")
-                        print("GAME OVER!")
-                        sys.exit()
                 #-------
             else:
                 print("Please try again")
-                game(money,ingredients)
-            game()
-
+                game()
+    game()
 
     if p.lower() == "n":
         print("Exiting...")

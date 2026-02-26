@@ -7,7 +7,9 @@ sugarPrice = 0.60
 cupPrice = 0.50
 icePrice = 0.99
 #-------
-def shop(ingredients,money):
+def shop():
+    global money
+    global ingredients
     # print("\nYou have entered the shop!") # Takes count of what the user wants >>
     print("------------------------------")
     when = input("What would you like to purchase? \
@@ -52,6 +54,5 @@ def shop(ingredients,money):
         return money, -1
     return money, 0
 #-------
-
-
+# The fear of long words is Hippopotomonstrosesquippedaliophobia.
 print("------------------------------------------------------")
