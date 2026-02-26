@@ -1,18 +1,15 @@
 
-import main_one
-
-from main_two import what
 
 Usage = {}
 
 def price(money):
     global Usage
     recipe_items = []
-    print("Enter your recipe items (type 'done' when finished):")
+    print("Enter your recipe items (type 'done' when finished):\n")
     while True:
-        item = input("What would you like to add to your recipe? ")
-        if item.lower() == 'done':
-            what()
+        item = input("What would you like to add to your recipe? (Type STOP to Stop) 'n")
+        if item.lower() == 'STOP':
+            break
         recipe_items.append(item)
         print(f"Added: {item}")
     

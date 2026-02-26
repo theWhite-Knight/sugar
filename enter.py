@@ -1,7 +1,7 @@
 import sys
 import time
 from welcomeToShop import shop
-import main_two
+
 #-------
 #-------
 def startday():
