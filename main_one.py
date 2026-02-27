@@ -1,13 +1,16 @@
 import time
 import sys
+
 #-------
-from recipe import price
 
 # Global variables accessible across modules
 money = 200
 day = 1
 
 LemonSet = 0
+
+# For Recipe, A list turns to this (Dictionary) 
+Usage = {}
 
 ingredients = {
     "Lemons": 0,
@@ -58,14 +61,30 @@ if p.lower() == "y":
 
                     elif enter.lower() == "n":
                         print("Cancelling...")
+
                     else:
                         print("Invalid input...")
                     
                     #-------
                 # --------
             elif what == "2":
-                print("You chose to change your recipe")
+                print("You chose to change your recipe") # Recipe
+
+                def price(money):
+                    global Usage
+                    recipe_items = []
+                    while True:
+                        item = input("What would you like to add to your recipe? (Type STOP to Stop)\n")
+                        amount = input("How much would you like to add?\n")
+                        if item.lower() == 'STOP':
+                            what()
+                        recipe_items.append(item + amount)
+                        print(f"Added: {item} ")
+                        Usage["recipe"] = recipe_items
+                        print(f"Your Item was added to you Recipe: {Usage}")
                 price(money)
+
+                
             elif what == "3":
                 print("You chose to change your lemonade price")
                 try:
@@ -79,6 +98,7 @@ if p.lower() == "y":
                 except ValueError:
                     print("Please enter a valid number...")
                 
+
             elif what == "4":
                 #-------
                 def startday():
@@ -91,7 +111,9 @@ if p.lower() == "y":
                     time.sleep(1)
                     day += 1
                     print(f"Day {day} begins!")
+
                 #-------
+
                 startday()
             elif what == "5":
                 print("Thanks for playing!")
@@ -104,6 +126,7 @@ if p.lower() == "y":
 elif p.lower() == "n":
     print("Exiting...")
     sys.exit()
+
 else:
     print("Invalid input. Exiting...")
     sys.exit()
