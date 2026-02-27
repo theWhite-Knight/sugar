@@ -2,7 +2,7 @@ import time
 import sys
 
 #-------
-
+from welcomeToShop import shop as S
 # Global variables accessible across modules
 money = 200
 day = 1
@@ -23,13 +23,17 @@ ingredients = {
 
 
 
+# NOTE: FINISH CREDITS ON THE BOTTOM OF THE CODE!!!
+
+
+
 #-------
 print("------------------------------")
 print("★~ The Lemonade Stand Game ~★")
 print("------------------------------")
 p = input("Would you like to play the game? (Y/N)\n")
 #-------
-if p.lower() == "y":
+if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
     print("Starting game...")
     time.sleep(1)
     print("3...")
@@ -57,6 +61,8 @@ if p.lower() == "y":
                         print(f"\nYou have {ingredients}.")
                         print(">>>")
                         print(f"You have ${money:.2f} dollars.")
+
+                        S(money,ingredients)
            
 
                             
@@ -127,6 +133,17 @@ if p.lower() == "y":
         print("New day...")
         print("------------------------------")
         game()
+    
+    if day <= 7:
+        print("You have survived 7 Days of Buisness")
+        credit_roll = input("Would you like to roll Credits?\n")
+
+        if credit_roll.lower() == "y" or "yes" or "ok" or "okay" or "sure":
+            print("Now rolling Credits...")
+        
+        if credit_roll.lower() == "no" or "n":
+            print("Okay, Thanks for Playing!")
+            sys.exit()
 
 elif p.lower() == "n":
     print("Exiting...")

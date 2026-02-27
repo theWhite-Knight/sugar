@@ -13,7 +13,7 @@ money = None
 ingredients = None
 
 def set_globals(m, i):
-    """Set the global variables from main_one.py"""
+    # Set the global variables from main_one.py
     global money, ingredients
     money = m
     ingredients = i
