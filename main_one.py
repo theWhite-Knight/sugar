@@ -10,6 +10,7 @@ day = 1
 LemonSet = 0
 
 # For Recipe, A list turns to this (Dictionary) 
+
 Usage = {}
 
 ingredients = {
@@ -50,15 +51,13 @@ if p.lower() == "y":
                     enter = input("Would you like to enter the shop? (Y/N):\n")
                     if enter.lower() == "y":
                         print("Entering shop...")
-                        
-                        while True:
-                            # Update global variables before each shop call
+        
+                        # Update global variables before each shop call
 
-                            
-                            print(f"\nYou have {ingredients}.")
-                            print(">>>")
-                            print(f"You have ${money:.2f} dollars.")
-                            
+                        print(f"\nYou have {ingredients}.")
+                        print(">>>")
+                        print(f"You have ${money:.2f} dollars.")
+           
 
                             
                             # Update local variables
@@ -68,7 +67,7 @@ if p.lower() == "y":
 
                     else:
                         print("Invalid input...")
-                    
+                enterShop()    
                     #-------
                 # --------
             elif what == "2":

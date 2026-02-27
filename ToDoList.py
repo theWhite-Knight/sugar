@@ -47,3 +47,4 @@ print("Jet's Version")
 # EndOfLine    - Gives a lot of Money         - (Quote from Tron, NOTE: Its a really good movie series except for the first movie)
 # ADMIN_ABUSE    - Gives 100 ingredients of Lemons, Sugar, Ice, and Cups + Money
 # AreWeSerious?!    - Times the Player income by 1.2x
+# CriticalFailiure    - Releases a Hidden 
