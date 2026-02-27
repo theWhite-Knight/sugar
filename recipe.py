@@ -7,7 +7,7 @@ def price(money):
     recipe_items = []
     print("Enter your recipe items (type 'done' when finished):\n")
     while True:
-        item = input("What would you like to add to your recipe? (Type STOP to Stop) 'n")
+        item = input("What would you like to add to your recipe? (Type STOP to Stop)\n")
         if item.lower() == 'STOP':
             break
         recipe_items.append(item)

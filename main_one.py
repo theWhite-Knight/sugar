@@ -1,12 +1,12 @@
 import time
 import sys
 #-------
-from filler import enterShop
 from recipe import price
-#-------
+
+# Global variables accessible across modules
 money = 200
 day = 1
-#-------
+
 LemonSet = 0
 
 ingredients = {
@@ -15,8 +15,6 @@ ingredients = {
     "Cups": 0, 
     "Ice": 0,
 }
-#-------
-money = 200
 #-------
 print("------------------------------")
 print("★~ The Lemonade Stand Game ~★")
@@ -34,28 +32,52 @@ if p.lower() == "y":
     time.sleep(1)
     
     def game():
-        if day <= 1:
-            what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day.\n")
+        global day
+        while True:
+            what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day, (5) Quit.\n")
             #-------
             if what == "1":
-                enterShop()
+                def enterShop():
+                    # Access global variables from main_one
+                    
+                    enter = input("Would you like to enter the shop? (Y/N):\n")
+                    if enter.lower() == "y":
+                        print("Entering shop...")
+                        
+                        while True:
+                            # Update global variables before each shop call
+
+                            
+                            print(f"\nYou have {ingredients}.")
+                            print(">>>")
+                            print(f"You have ${money:.2f} dollars.")
+                            
+
+                            
+                            # Update local variables
+
+                    elif enter.lower() == "n":
+                        print("Cancelling...")
+                    else:
+                        print("Invalid input...")
+                    
+                    #-------
+                # --------
             elif what == "2":
                 print("You chose to change your recipe")
                 price(money)
             elif what == "3":
-                print("You chose to change your lemonade recipe")
-                LemonSet = int(input("What would you like to set your lemonade price to?\n "))
-                if LemonSet <= .01:
-                    print(f"You set your lemonade price to {LemonSet}!")
-                elif LemonSet <= 0:
-                    print("Please try again...")
-                    what()
-                if ValueError:
-                    print("Please try again...")
-                    what()  
-                else:
-                    print("Please try again...")
-                    what()    
+                print("You chose to change your lemonade price")
+                try:
+                    LemonSet = float(input("What would you like to set your lemonade price to?\n "))
+                    if LemonSet > 0.01:
+                        print(f"You set your lemonade price to ${LemonSet}!")
+                    elif LemonSet <= 0.01:
+                        print("Price must be greater than 0.01. Please try again...")
+                    else:
+                        print("Please try again...")
+                except ValueError:
+                    print("Please enter a valid number...")
                 
             elif what == "4":
                 #-------
@@ -68,14 +90,22 @@ if p.lower() == "y":
                     print("selling...")
                     time.sleep(1)
                     day += 1
+                    print(f"Day {day} begins!")
                 #-------
+                startday()
+            elif what == "5":
+                print("Thanks for playing!")
+                break
             else:
                 print("Please try again")
-                game()
+    
     game()
 
-    if p.lower() == "n":
-        print("Exiting...")
-        sys.exit()
+elif p.lower() == "n":
+    print("Exiting...")
+    sys.exit()
+else:
+    print("Invalid input. Exiting...")
+    sys.exit()
 
 

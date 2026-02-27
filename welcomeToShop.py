@@ -1,58 +1,85 @@
 # ALex's take on "Ingredients and Money"
 #-------
 import sys
+
 # Cost of ingredients.
 lemonPrice = 1.99
 sugarPrice = 0.60
 cupPrice = 0.50
 icePrice = 0.99
+
+# These will be set from main_one.py
+money = None
+ingredients = None
+
+def set_globals(m, i):
+    """Set the global variables from main_one.py"""
+    global money, ingredients
+    money = m
+    ingredients = i
+
 #-------
 def shop():
-    global money
-    global ingredients
+    global money, ingredients
     # print("\nYou have entered the shop!") # Takes count of what the user wants >>
     print("------------------------------")
     when = input("What would you like to purchase? \
-(1) Lemons [1.99 per], (2) Sugar [0.60 per lb], (3) Cups [0.50 per], (4) Ice [0.99 per lb]:\n" "Enter EXIT to exit.\n")
+(1) Lemons [1.99 per], (2) Sugar [0.60 per lb], (3) Cups [0.50 per], (4) Ice [0.99 per lb]:\nEnter EXIT to exit.\n")
     # Math on the cost*Usercount for each ingredient >>
     if when == "1":
         print("You have decided to pick Lemons!")
-        amount= int(input("How much would you like to buy?:\n"))
-        if amount*lemonPrice >= money:
+        amount = int(input("How much would you like to buy?:\n"))
+        cost = amount * lemonPrice
+        if cost >= money:
             print("You don't have enough money")
-        elif amount*lemonPrice <= money:
-            money = money-amount*lemonPrice
+        else:
+            money = money - cost
             ingredients["Lemons"] += amount
-    if when == "2":
+            print(f"You bought {amount} lemon(s)!")
+            
+    elif when == "2":
         print("You have decided to pick Sugar!")
         amount = int(input("How much would you like to buy?:\n"))
-        if amount*sugarPrice >= money:
+        cost = amount * sugarPrice
+        if cost >= money:
             print("You don't have enough money")
-        elif amount*sugarPrice <= money:
-            money = money-amount*sugarPrice
+        else:
+            money = money - cost
             ingredients["Sugar"] += amount
-    if when == "3":
+            print(f"You bought {amount} lb of sugar!")
+            
+    elif when == "3":
         print("You have decided to pick Cups!")
         amount = int(input("How much would you like to buy?:\n"))
-        if amount*cupPrice >= money:
+        cost = amount * cupPrice
+        if cost >= money:
             print("You don't have enough money")
             print(money)
-        elif amount*cupPrice <= money:
-            money = money-amount*cupPrice
+        else:
+            money = money - cost
             ingredients["Cups"] += amount
-    if when == "4":
+            print(f"You bought {amount} cup(s)!")
+            
+    elif when == "4":
         print("You have decided to pick Ice!")
         amount = int(input("How much would you like to buy?:\n"))
-        if amount*icePrice >= money:
+        cost = amount * icePrice
+        if cost >= money:
             print("\nYou don't have enough money\n")
             print(money)
-        elif amount*icePrice <= money:
-            money = money-amount*icePrice
+        else:
+            money = money - cost
             ingredients["Ice"] += amount
-    if when.lower() == "exit":
-        print(f"Your balance is: {money}")
+            print(f"You bought {amount} lb of ice!")
+            
+    elif when.lower() == "exit":
+        print(f"Your balance is: ${money:.2f}")
         return money, -1
+    else:
+        print("Invalid choice. Please try again.")
+        
     return money, 0
+
 #-------
 # The fear of long words is Hippopotomonstrosesquippedaliophobia.
 print("------------------------------------------------------")
