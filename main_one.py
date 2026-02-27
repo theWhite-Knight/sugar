@@ -123,8 +123,10 @@ if p.lower() == "y":
                 break
             else:
                 print("Please try again")
-    
-    game()
+    while day >= 1:
+        print("New day...")
+        print("------------------------------")
+        game()
 
 elif p.lower() == "n":
     print("Exiting...")
