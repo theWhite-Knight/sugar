@@ -42,7 +42,7 @@ print("Jet's Version")
 
 # Cheat Code Ideas - NOTE: Do NOT Delete any Ideas, remember they're all NOT Official Yet
 
-# NOTE: I, Jet, was thinking the codes will work only ONCE throughout the gameplay. It'll reset if the program resets!
+# NOTE: Jet was thinking the codes will work only ONCE throughout the gameplay. It'll reset if the program resets!
 
 # EndOfLine    - Gives a lot of Money         - (Quote from Tron, NOTE: Its a really good movie series except for the first movie)
 # ADMIN_ABUSE    - Gives 100 ingredients of Lemons, Sugar, Ice, and Cups + Money

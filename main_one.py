@@ -23,7 +23,7 @@ ingredients = {
 
 
 
-# NOTE: FINISH CREDITS ON THE BOTTOM OF THE CODE!!!
+
 
 
 
@@ -33,7 +33,8 @@ print("★~ The Lemonade Stand Game ~★")
 print("------------------------------")
 p = input("Would you like to play the game? (Y/N)\n")
 #-------
-if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
+if p.lower() in ("y", "yes", "ok", "okay", "sure"):
+    print("Good Luck!")
     print("Starting game...")
     time.sleep(1)
     print("3...")
@@ -42,59 +43,69 @@ if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
     time.sleep(1)
     print("1...")
     time.sleep(1)
+    print("--------------------------------------------------------------------------")
     
     def game():
         global day
-        while True:
+        global money
+        global ingredients
+        while day <= 7:
+            print(f"You have {money} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day} \nYour Recipe consists of {Usage}\n")
+
+            print("NOTE: You cannot start the sales day if your Lemonade Price equals 0, and if your Recipe doesn't have Lemons, Cups, Ice, and Sugar with a set amount of each\n")
+            print(">>>")
+            print(">>>")
+            print("-----------------------------------------------------------------------------------------------------------------")
             what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day, (5) Quit.\n")
             #-------
             if what == "1":
                 def enterShop():
                     # Access global variables from main_one
-                    
+                    print("--------------------------------------------------")
                     enter = input("Would you like to enter the shop? (Y/N):\n")
                     if enter.lower() == "y":
                         print("Entering shop...")
-        
                         # Update global variables before each shop call
-
                         print(f"\nYou have {ingredients}.")
                         print(">>>")
                         print(f"You have ${money:.2f} dollars.")
+                        # Set globals in welcomeToShop module before calling shop
 
-                        S(money,ingredients)
-           
-
-                            
-                            # Update local variables
+                        
+                        S(money, ingredients)
+                        S()
 
                     elif enter.lower() == "n":
                         print("Cancelling...")
 
                     else:
                         print("Invalid input...")
-                enterShop()    
+                if what == "1":
+                    enterShop()   
                     #-------
                 # --------
             elif what == "2":
+                print("--------------------------------------------------")
                 print("You chose to change your recipe") # Recipe
 
-                def price(money):
+                def price():
                     global Usage
                     recipe_items = []
                     while True:
                         item = input("What would you like to add to your recipe? (Type STOP to Stop)\n")
                         amount = input("How much would you like to add?\n")
                         if item.lower() == 'STOP':
-                            what()
-                        recipe_items.append(item + amount)
-                        print(f"Added: {item} ")
+                            break
+                        recipe_items.append(item)
+                        recipe_items.append(amount)
+                        print(f"Added: {amount}{item} ")
                         Usage["recipe"] = recipe_items
                         print(f"Your Item was added to you Recipe: {Usage}")
-                price(money)
+                price()
 
                 
             elif what == "3":
+                print("--------------------------------------------------")
                 print("You chose to change your lemonade price")
                 try:
                     LemonSet = float(input("What would you like to set your lemonade price to?\n "))
@@ -111,6 +122,7 @@ if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
             elif what == "4":
                 #-------
                 def startday():
+                    print("--------------------------------------------------")
                     print("Starting the day!")
                     print("selling...")
                     time.sleep(1)
@@ -129,21 +141,44 @@ if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
                 break
             else:
                 print("Please try again")
-    while day >= 1:
-        print("New day...")
-        print("------------------------------")
-        game()
-    
-    if day <= 7:
-        print("You have survived 7 Days of Buisness")
-        credit_roll = input("Would you like to roll Credits?\n")
 
-        if credit_roll.lower() == "y" or "yes" or "ok" or "okay" or "sure":
-            print("Now rolling Credits...")
-        
-        if credit_roll.lower() == "no" or "n":
-            print("Okay, Thanks for Playing!")
-            sys.exit()
+    
+        if day >= 7:
+            print("--------------------------------------------------")
+            print("You have survived 7 Days of Buisness")
+            credit_roll = input("Would you like to roll Credits?\n")
+
+            if credit_roll.lower() in ("y", "yes", "ok", "okay", "sure"):
+                print("Now rolling Credits...")
+                sys.sleep(0.75)
+                print("Front End...")
+                sys.sleep(0.75)
+                print("Jet")
+                sys.sleep(0.75)
+                print("Alexandra")
+                sys.sleep(0.75)
+                print("Back End...")
+                sys.sleep(0.75)
+                print("Dillan")
+                sys.sleep(0.75)
+                print("Evaristo")
+                sys.sleep(0.75)
+                print("Testers...")
+                sys.sleep(0.75)
+                print("Tristan")
+                sys.sleep(0.75)
+                print("Evaristo")
+                sys.sleep(0.75)
+                print("The End!")
+                sys.sleep(0.75)
+                print("Thanks for Playing!")
+                sys.exit()
+            
+            if credit_roll.lower() in ("no", "n"):
+                print("Okay, Thanks for Playing!")
+                sys.sleep(0.75)
+                sys.exit()
+    game()
 
 elif p.lower() == "n":
     print("Exiting...")
@@ -153,4 +188,8 @@ else:
     print("Invalid input. Exiting...")
     sys.exit()
 
-
+if money <= 0:
+    print("You lost!")
+    print("------------------")
+    print("GAME OVER!")
+    sys.exit()
