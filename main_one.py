@@ -3,6 +3,7 @@ import sys
 
 #-------
 from welcomeToShop import shop as S
+from ToDoList import todo
 # Global variables accessible across modules
 money = 200
 day = 1
@@ -21,7 +22,7 @@ ingredients = {
 }
 
 
-
+# NOTE: On the What Input, if you put "TODO" it will print up our TODO list.
 
 
 
@@ -58,7 +59,10 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
             print("-----------------------------------------------------------------------------------------------------------------")
             what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day, (5) Quit.\n")
             #-------
-            if what == "1":
+            if what == "TODO":
+                todo()
+            
+            elif what == "1":
                 def enterShop():
                     # Access global variables from main_one
                     print("--------------------------------------------------")
@@ -178,7 +182,12 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
                 print("Okay, Thanks for Playing!")
                 sys.sleep(0.75)
                 sys.exit()
-    game()
+
+    game_run = True
+    while True:
+        game()
+        game_run = False
+
 
 elif p.lower() == "n":
     print("Exiting...")
