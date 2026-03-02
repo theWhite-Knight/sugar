@@ -52,6 +52,7 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
         global ingredients
         while day <= 7:
             LemonSet = float(input("What would you like to set your Lemonade price to?\n   (Note: You can change this later, and add decimals to the hundreths place)\n"))
+            
             if LemonSet.isdigit():
                 print(f"You have {money} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day}. \nYour Recipe consists of {Usage}.\n")
                 print(f"The price of your Lemonade is {LemonSet}")
