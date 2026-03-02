@@ -1,32 +1,24 @@
 import time
 import sys
-
 #-------
-from welcomeToShop import shop as S
+from welcomeToShop import shop
 # Global variables accessible across modules
 money = 200
 day = 1
-
+#-------
 LemonSet = 0
-
+#-------
 # For Recipe, A list turns to this (Dictionary) 
-
+#-------
 Usage = {}
-
+#-------
 ingredients = {
     "Lemons": 0,
     "Sugar": 0,
     "Cups": 0, 
     "Ice": 0,
 }
-
-
-
-
 # NOTE: FINISH CREDITS ON THE BOTTOM OF THE CODE!!!
-
-
-
 #-------
 print("------------------------------")
 print("★~ The Lemonade Stand Game ~★")
@@ -42,7 +34,7 @@ if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
     time.sleep(1)
     print("1...")
     time.sleep(1)
-    
+#---------------------
     def game():
         global day
         while True:
@@ -50,35 +42,20 @@ if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
             #-------
             if what == "1":
                 def enterShop():
-                    # Access global variables from main_one
-                    
                     enter = input("Would you like to enter the shop? (Y/N):\n")
                     if enter.lower() == "y":
                         print("Entering shop...")
-        
-                        # Update global variables before each shop call
-
-                        print(f"\nYou have {ingredients}.")
-                        print(">>>")
-                        print(f"You have ${money:.2f} dollars.")
-
-                        S(money,ingredients)
-           
-
-                            
-                            # Update local variables
-
+                        shop()
                     elif enter.lower() == "n":
                         print("Cancelling...")
-
                     else:
                         print("Invalid input...")
                 enterShop()    
-                    #-------
-                # --------
+#----------------------------
+#----------------------------
             elif what == "2":
-                print("You chose to change your recipe") # Recipe
-
+                print("You chose to change your recipe") 
+                # Recipe
                 def price(money):
                     global Usage
                     recipe_items = []
@@ -92,10 +69,8 @@ if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
                         Usage["recipe"] = recipe_items
                         print(f"Your Item was added to you Recipe: {Usage}")
                 price(money)
-
-                
             elif what == "3":
-                print("You chose to change your lemonade price")
+                print("You chose to change your lemonade price...")
                 try:
                     LemonSet = float(input("What would you like to set your lemonade price to?\n "))
                     if LemonSet > 0.01:
@@ -133,7 +108,11 @@ if p.lower() == "y" or "yes" or "ok" or "okay" or "sure":
         print("New day...")
         print("------------------------------")
         game()
-    
+        if money <= 0:
+            print("You lost!")
+            print("------------------")
+            print("GAME OVER!")
+            sys.exit()
     if day <= 7:
         print("You have survived 7 Days of Buisness")
         credit_roll = input("Would you like to roll Credits?\n")

@@ -9,10 +9,10 @@ print("Jet's Version")
 # [ ] = Not Done yet
 # { } Option (Not required)
 
-# NOTE: The following Steps Are NOT in order, and try not to go down the list in order. Also, please try not to delete Steps if you think
-#       that you don't like it or something. Either tell someone in person in advanced or just Comment Next to it please! Adding Steps is Great though.😊
+# NOTE: The following Steps Are NOT in order, and try not to go down the list in order. Also, please try not to delete steps if you think
+#       that you don't like it or something. Either tell someone in person in advanced or just Comment Next to it please! Adding steps is great though.😊
 
-# NOTE: Save the 'Option Steps' for last unless it litterly takes like 10 minutes, This is only to optimize our time wisley and not
+# NOTE: Save the 'Option Steps' for last unless it litterly takes like 10 minutes, This is only to optimize our time wisely and not
 #       spend half the project time wasting our time on things like weather.
 
 # ------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ print("Jet's Version")
 
 # ------------------------------------------------------------------------------------------------------------------------
 
-# Cheat Code Ideas - NOTE: Do NOT Delete any Ideas, remember they're all NOT Official Yet
+# Cheat Code Ideas - NOTE: Do NOT Delete any ideas, remember they're all NOT official yet
 
 # NOTE: I, Jet, was thinking the codes will work only ONCE throughout the gameplay. It'll reset if the program resets!
 
