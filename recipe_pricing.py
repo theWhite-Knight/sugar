@@ -1,4 +1,3 @@
-from welcomeToShop import shop
 #-------
 lemon_set = 0
 recipe = []
