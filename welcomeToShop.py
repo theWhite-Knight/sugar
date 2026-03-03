@@ -30,6 +30,12 @@ def set_globals(m, i):
 #-------
 def shop():
     global money, ingredients
+    # Initialize with default values if globals are not set
+    if money is None:
+        money = 200
+    if ingredients is None:
+        ingredients = {"Lemons": 0, "Sugar": 0, "Cups": 0, "Ice": 0}
+    
     print("------------------------------")
     when = input("What would you like to purchase? \
 (1) Lemons [1.99 per], (2) Sugar [0.60 per lb], (3) Cups [0.50 per], (4) Ice [0.99 per lb]:\nEnter EXIT to exit.\n")

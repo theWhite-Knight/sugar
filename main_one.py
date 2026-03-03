@@ -2,17 +2,22 @@ import time
 import sys
 
 #-------
-from welcomeToShop import shop as S
+from welcomeToShop import shop as S, set_globals
 from ToDoList import todo
+
 # Global variables accessible across modules
 money = 200
 day = 1
 
-LemonSet = []
+LemonSet = 0
 
 # For Recipe, A list turns to this (Dictionary) 
 
 Usage = {}
+
+start = True
+lemon = True
+
 
 ingredients = {
     "Lemons": 0,
@@ -36,7 +41,12 @@ if money <= 0:
 print("------------------------------")
 print("★~ The Lemonade Stand Game ~★")
 print("------------------------------")
-p = input("Would you like to play the game? (Y/N)\n")
+try:
+    p = input("Would you like to play the game? (Y/N)\n")
+
+except KeyboardInterrupt:
+    print("\nExiting...")
+    sys.exit()
 #-------
 if p.lower() in ("y", "yes", "ok", "okay", "sure"):
     print("Good Luck!")
@@ -55,45 +65,59 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
         global money
         global ingredients
         while day <= 7:
-            LemonSet = float(input("What would you like to set your Lemonade price to?\n   (Note: You can change this later, and add decimals to the hundreths place)\n"))
 
-            if LemonSet.isdigit():
-                print(f"You have {money} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day}. \nYour Recipe consists of {Usage}.\n")
-                print(f"The price of your Lemonade is {LemonSet}")
+            try:
+                LemonSet = float(input("What would you like to set your Lemonade price to?\n   (Note: You can change this later, and add decimals to the hundreths place, For example 2.99)\nNOTE: Don't add a Dollar Sign $\n"))
+
+            except ValueError:
+                print("Please enter a valid number!")
+                continue
+            except KeyboardInterrupt:
+                print("\nExiting...")
+                sys.exit()
+
+            if isinstance(LemonSet, (int, float)) and LemonSet > 0:
+
+                print("------------------------------------------------------------------------------------------------------------------------------------")
+                print(f"You have {money} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day}. \nYour Recipe consists of {Usage}.")
+                print(f"The price of your Lemonade is ${LemonSet}\n")
 
                 print("NOTE: You cannot start the sales day if your Lemonade Price equals 0, and if your Recipe doesn't have Lemons, Cups, Ice, and Sugar with a set amount of each\n")
                 print(">>>")
                 print(">>>")
                 print("-----------------------------------------------------------------------------------------------------------------")
-                what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day, (5) Quit.\n")
+                try:
+                    what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day, (5) Quit.\n")
+
+                except KeyboardInterrupt:
+                    print("\nExiting...")
+                    sys.exit()
                 #-------
                 if what == "TODO":
                     todo()
                 
                 elif what == "1":
-                    def enterShop():
-                        # Access global variables from main_one
-                        print("--------------------------------------------------")
+                    # Access global variables from main_one
+                    print("--------------------------------------------------")
+                    try:
                         enter = input("Would you like to enter the shop? (Y/N):\n")
-                        if enter.lower() == "y":
-                            print("Entering shop...")
-                            # Update global variables before each shop call
-                            print(f"\nYou have {ingredients}.")
-                            print(">>>")
-                            print(f"You have ${money:.2f} dollars.")
-                            # Set globals in welcomeToShop module before calling shop
 
-                            
-                            
-                            S()
-
-                        elif enter.lower() == "n":
-                            print("Cancelling...")
-
-                        else:
-                            print("Invalid input...")
-                    if what == "1":
-                        enterShop()   
+                    except KeyboardInterrupt:
+                        print("\nExiting...")
+                        sys.exit()
+                    if enter.lower() == "y":
+                        print("Entering shop...")
+                        # Update global variables before each shop call
+                        print(f"\nYou have {ingredients}.")
+                        print(">>>")
+                        print(f"You have ${money:.2f} dollars.")
+                        # Set globals in welcomeToShop module before calling shop
+                        set_globals(money, ingredients)
+                        S()
+                    elif enter.lower() == "n":
+                        print("Cancelling...")
+                    else:
+                        print("Invalid input...")
                         #-------
                     # --------
                 elif what == "2":
@@ -104,8 +128,18 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
                         global Usage
                         recipe_items = []
                         while True:
-                            item = input("What would you like to add to your recipe? (Type STOP to Stop)\n")
-                            amount = input("How much would you like to add?\n")
+                            try:
+                                item = input("What would you like to add to your recipe? (Type STOP to Stop)\n")
+
+                            except KeyboardInterrupt:
+                                print("\nExiting...")
+                                sys.exit()
+                            try:
+                                amount = input("How much would you like to add?\n")
+
+                            except KeyboardInterrupt:
+                                print("\nExiting...")
+                                sys.exit()
                             if item.lower() == 'STOP':
                                 break
                             recipe_items.append(item)
@@ -127,13 +161,19 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
                             print("Price must be greater than 0.01. Please try again...")
                         else:
                             print("Please try again...")
+
                     except ValueError:
                         print("Please enter a valid number...")
+
+                    except KeyboardInterrupt:
+                        print("\nExiting...")
+                        sys.exit()
                     
 
                 elif what == "4":
                     #-------
                     def startday():
+                        global day
                         print("--------------------------------------------------")
                         print("Starting the day!")
                         print("selling...")
@@ -158,54 +198,50 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
             if day >= 7:
                 print("--------------------------------------------------")
                 print("You have survived 7 Days of Buisness")
-                credit_roll = input("Would you like to roll Credits?\n")
+                try:
+                    credit_roll = input("Would you like to roll Credits?\n")
+                except KeyboardInterrupt:
+                    print("\nExiting...")
+                    sys.exit()
 
                 if credit_roll.lower() in ("y", "yes", "ok", "okay", "sure"):
                     print("Now rolling Credits...")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Front End...")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Jet")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Alexandra")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Back End...")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Dillan")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Evaristo")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Testers...")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Tristan")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Evaristo")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("The End!")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     print("Thanks for Playing!")
                     sys.exit()
                 
                 if credit_roll.lower() in ("no", "n"):
                     print("Okay, Thanks for Playing!")
-                    sys.sleep(0.75)
+                    time.sleep(0.75)
                     sys.exit()
 
-            if not LemonSet.isdigit():
+            if not (isinstance(LemonSet, (int, float)) and LemonSet > 0):
                 print("Please try again!")
-                game_run = True
-                while True:
-                    game()
-                    game_run = False
+                continue
 
-
-    game_run = True
-    while True:
+    if start == True:
         game()
-        game_run = False
-        
-
-
+        start = False
 
 elif p.lower() == "n":
     print("Exiting...")
@@ -214,5 +250,3 @@ elif p.lower() == "n":
 else:
     print("Invalid input. Exiting...")
     sys.exit()
-
-
