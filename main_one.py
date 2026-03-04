@@ -1,3 +1,33 @@
+# ~ The Lemonade Stand Game ~
+
+# NOTE: "Abs" stands for "Absolute Value" which is a mathematical function that returns the non-negative value of a number. 
+# In the context of the customer preference calculation, it is used to determine how far the lemon or sugar ratio is from a balanced 0.5, which helps to calculate how many 
+# customers prefer sweet, sour, or balanced lemonade based on the recipe.
+# -----
+# Except KeyboardInterrupt is used to allow the user to exit the game gracefully by pressing Ctrl+C. When this happens, 
+# it will print "Exiting..." and then terminate the program using sys.exit().
+# -----
+# Except ValueError is used to catch cases where the user inputs something that cannot be converted to a number (like letters or symbols) 
+# when setting the lemonade price or adding ingredients to the recipe.
+# -----
+# The Sour + Sweet ratio is calculated to determine customer preferences. If the lemonade is too sour (high lemon ratio) or too sweet (high sugar ratio), 
+# it will affect how many customers are willing to buy the lemonade and how much they are willing to pay.
+# The game encourages players to find a balance in their recipe to maximize sales.
+# -----
+# Random.uniform is used to add variability to customer willingness to pay, making the game more dynamic and less predictable. Basically, its just a better 
+# way to make the game more fun and less robotic by adding some more randomness than (random.random / random.randit) to how much customers are willing to pay based on their preferences.
+# -----
+# NOTE: Prefrences are calculated based on the ratio of lemons to sugar in the recipe. If the lemonade is very sour (high lemon ratio), more customers will prefer sour lemonade.
+# If it's very sweet (high sugar ratio), more customers will prefer sweet lemonade. A balanced recipe will attract a more even distribution of customer preferences. And its completly 
+# randomized on how much they are willing to pay based on their preferences, which adds more fun and less roboticness to the game.
+# -----
+# .2f: This is a string formatting option that formats a floating-point number to two decimal places. In the context of this game, it is used to display the player's money and earnings 
+# in a more readable format, showing only two digits after the decimal point (e.g., $10.00 instead of $10.0 or $10.000000).
+# -----
+
+
+
+
 import time
 import sys
 import random
@@ -180,12 +210,13 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
             print("New Day...")
             print(f"Day {day} begins!")
 
+            if day_cycle == True:
+                day += 1
+
             if day_cycle == False:
                 day = 1
                 day_cycle = True
-            
-            if day_cycle == True:
-                day += 1
+        
 
             try:
                 if ask == True:
@@ -204,7 +235,7 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
             if isinstance(LemonSet, (int, float)) and LemonSet > 0:
 
                 print("------------------------------------------------------------------------------------------------------------------------------------")
-                print(f"You have {money} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day}. \nYour Recipe consists of {Usage}.")
+                print(f"You have ${money:.2f} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day}. \nYour Recipe consists of {Usage}.")
                 print(f"The price of your Lemonade is ${LemonSet}\n")
 
                 print("NOTE: You cannot start the sales day if your Lemonade Price equals 0, and if your Recipe doesn't have Lemons, Cups, Ice, and Sugar with a set amount of each\n")
@@ -411,10 +442,21 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
                     print("The End!")
                     time.sleep(0.75)
                     print("Thanks for Playing!")
+                    print("Final Money: ${money:.2f}")
+                    print("Final Day: {day}")
+                    print("Final Recipe: {recipe}")
+                    print("Final Ingredients: {ingredients}")
+                    print("Final Lemonade Price: ${LemonSet:.2f}")
+                    print("Exiting...")
                     sys.exit()
                 
                 if credit_roll.lower() in ("no", "n"):
                     print("Okay, Thanks for Playing!")
+                    print("Final Money: ${money:.2f}")
+                    print("Final Day: {day}")
+                    print("Final Recipe: {recipe}")
+                    print("Final Ingredients: {ingredients}")
+                    print("Final Lemonade Price: ${LemonSet:.2f}")
                     time.sleep(0.75)
                     sys.exit()
 
