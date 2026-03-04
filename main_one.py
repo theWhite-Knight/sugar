@@ -146,6 +146,12 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
     time.sleep(1)
     print("--------------------------------------------------------------------------")
     
+
+    # NOTE: Lines 154 to 245 is all Customer Preference Calculation and Sales Processing. It calculates how many customers prefer sweet, sour, or balanced lemonade based on the recipe,
+    # and then processes sales based on the price and customer preferences, while also updating the player's money and inventory accordingly.
+
+
+
     def calculate_customer_preference():
         # Calculate customer preference based on recipe (Lemons = sour, Sugar = sweet)
         global customer_preferences
@@ -320,7 +326,7 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
                         print("Cancelling...")
 
                     else:
-                        print("Invalid input...")
+                        print("Invalid input... \n")
                         #-------
                     # --------
                 elif what == "2":
@@ -332,6 +338,9 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
                     print("  - Sugar adds SWEETNESS (customers who like sweet will pay more)")
                     print("  - Balance is key! Too much of either may reduce customers.")
                     print("  - Ice, Lemons, and Sugar are all REQUIRED to sell lemonade\n")
+                    print("  - Once Cup is automatically used for one set of lemonade.")
+                    print(">>>")
+                    print(">>>\n")
 
                     def price():
                         global Usage
@@ -352,7 +361,7 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
                             # Validate ingredient
 
                             if item.lower() not in ("lemons", "sugar", "ice"):
-                                print("Please enter a valid ingredient (Lemons, Sugar, Ice)")
+                                print("Please enter a valid ingredient (Lemons, Sugar, Ice)\n")
                                 continue
                             
                             try:
