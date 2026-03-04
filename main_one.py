@@ -181,30 +181,35 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
             customer_preferences["sour"] = int(30 * lemon_ratio)
             customer_preferences["balanced"] = int(10 * (1 - abs(lemon_ratio - 0.5)))
             print(f"\n Customer Preference: VERY SOUR ({lemons} lemons, {sugar} sugar)")
+
         elif lemon_ratio > 0.5:
             # Sour - more sour preference
             customer_preferences["sweet"] = int(20 * sugar_ratio)
             customer_preferences["sour"] = int(25 * lemon_ratio)
             customer_preferences["balanced"] = int(15 * (1 - abs(lemon_ratio - 0.5)))
             print(f"\n Customer Preference: SOUR ({lemons} lemons, {sugar} sugar)")
+
         elif sugar_ratio > 0.7:
             # Very sweet - mostly sweet preference customers
             customer_preferences["sweet"] = int(30 * sugar_ratio)
             customer_preferences["sour"] = int(10 * lemon_ratio)
             customer_preferences["balanced"] = int(10 * (1 - abs(sugar_ratio - 0.5)))
             print(f"\n Customer Preference: VERY SWEET ({lemons} lemons, {sugar} sugar)")
+
         elif sugar_ratio > 0.5:
             # Sweet - more sweet preference
             customer_preferences["sweet"] = int(25 * sugar_ratio)
             customer_preferences["sour"] = int(20 * lemon_ratio)
             customer_preferences["balanced"] = int(15 * (1 - abs(sugar_ratio - 0.5)))
             print(f"\n Customer Preference: SWEET ({lemons} lemons, {sugar} sugar)")
+
         else:
             # Balanced
             customer_preferences["sweet"] = 20
             customer_preferences["sour"] = 20
             customer_preferences["balanced"] = 20
             print(f"\n Customer Preference: BALANCED ({lemons} lemons, {sugar} sugar)")
+            
         
         # Total potential customers based on recipe quality
         return min(50, (lemons + sugar) * 2)
