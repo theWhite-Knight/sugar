@@ -1,9 +1,12 @@
 import time
 import sys
+import random
+
+# Import functions from other modules
+from ToDoList import todo
+from welcomeToShop import set_globals, S
 
 #-------
-from welcomeToShop import shop as S, set_globals
-from ToDoList import todo
 
 # Global variables accessible across modules
 money = 200
@@ -15,10 +18,17 @@ LemonSet = 0
 
 Usage = {}
 
+ask = True
 start = True
 lemon = True
+day_cycle = False
 
-
+# Customer preference tracking
+customer_preferences = {
+    "sweet": 0,
+    "sour": 0,
+    "balanced": 0
+}
 
 ingredients = {
     "Lemons": 0,
@@ -27,6 +37,13 @@ ingredients = {
     "Ice": 0,
 }
 
+# Recipe amounts (for customer preference calculation)
+recipe = {
+    "Lemons": 0,
+    "Sugar": 0,
+    "Cups": 0,
+    "Ice": 0
+}
 
 # NOTE: On the What Input, if you put "TODO" it will print up our TODO list.
 
@@ -61,17 +78,119 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
     time.sleep(1)
     print("--------------------------------------------------------------------------")
     
+    def calculate_customer_preference():
+        # Calculate customer preference based on recipe (Lemons = sour, Sugar = sweet)
+        global customer_preferences
+        
+        lemons = recipe.get("Lemons", 0)
+        sugar = recipe.get("Sugar", 0)
+        
+        # If no lemons or sugar, customers won't buy
+        if lemons == 0 and sugar == 0 and ingredients["Cups"] > 0 and ingredients["Ice"] > 0:
+            print("\n WARNING: Your recipe has no Lemon or Sugar! Customers won't buy your lemonade!")
+            return 0
+        
+        # Calculate ratio
+        total = lemons + sugar
+        if total == 0:
+            return 0
+            
+        lemon_ratio = lemons / total
+        sugar_ratio = sugar / total
+        
+        # Determine preference distribution
+        if lemon_ratio > 0.7:
+            # Very sour - mostly sour preference customers
+            customer_preferences["sweet"] = int(10 * sugar_ratio)
+            customer_preferences["sour"] = int(30 * lemon_ratio)
+            customer_preferences["balanced"] = int(10 * (1 - abs(lemon_ratio - 0.5)))
+            print(f"\n Customer Preference: VERY SOUR ({lemons} lemons, {sugar} sugar)")
+        elif lemon_ratio > 0.5:
+            # Sour - more sour preference
+            customer_preferences["sweet"] = int(20 * sugar_ratio)
+            customer_preferences["sour"] = int(25 * lemon_ratio)
+            customer_preferences["balanced"] = int(15 * (1 - abs(lemon_ratio - 0.5)))
+            print(f"\n Customer Preference: SOUR ({lemons} lemons, {sugar} sugar)")
+        elif sugar_ratio > 0.7:
+            # Very sweet - mostly sweet preference customers
+            customer_preferences["sweet"] = int(30 * sugar_ratio)
+            customer_preferences["sour"] = int(10 * lemon_ratio)
+            customer_preferences["balanced"] = int(10 * (1 - abs(sugar_ratio - 0.5)))
+            print(f"\n Customer Preference: VERY SWEET ({lemons} lemons, {sugar} sugar)")
+        elif sugar_ratio > 0.5:
+            # Sweet - more sweet preference
+            customer_preferences["sweet"] = int(25 * sugar_ratio)
+            customer_preferences["sour"] = int(20 * lemon_ratio)
+            customer_preferences["balanced"] = int(15 * (1 - abs(sugar_ratio - 0.5)))
+            print(f"\n Customer Preference: SWEET ({lemons} lemons, {sugar} sugar)")
+        else:
+            # Balanced
+            customer_preferences["sweet"] = 20
+            customer_preferences["sour"] = 20
+            customer_preferences["balanced"] = 20
+            print(f"\n Customer Preference: BALANCED ({lemons} lemons, {sugar} sugar)")
+        
+        # Total potential customers based on recipe quality
+        return min(50, (lemons + sugar) * 2)
+    
+    def sell_to_customers(price, potential_customers):
+        # Process sales based on customer preferences and price
+        global money
+        global ingredients
+        
+        if ingredients["Cups"] == 0 or ingredients["Ice"] == 0:
+            print("\n WARNING: You need cups and ice to sell lemonade!")
+            return 0
+            
+        sold = 0
+        # Customer tolerance: they'll pay more for sweeter/balanced drinks
+        base_willingness = 3.00  # Base price customers are willing to pay
+        
+        # Adjust willingness based on preference match
+        for pref_type, pref_count in customer_preferences.items():
+            for _ in range(pref_count):
+                # Determine what customer is willing to pay
+                if pref_type == "sweet":
+                    willingness = base_willingness + random.uniform(-0.50, 1.00)
+                elif pref_type == "sour":
+                    willingness = base_willingness + random.uniform(-0.50, 0.75)
+                else:  # balanced
+                    willingness = base_willingness + random.uniform(-0.25, 0.50)
+                
+                # Customer buys if price is within willingness
+                if price <= willingness and ingredients["Cups"] > 0 and ingredients["Ice"] > 0:
+                    sold += 1
+                    money += price
+                    ingredients["Cups"] -= 1
+                    ingredients["Ice"] -= 1
+                    # Use some lemons and sugar
+                    if recipe["Lemons"] > 0:
+                        ingredients["Lemons"] = max(0, ingredients["Lemons"] - (recipe["Lemons"] / 10))
+                    if recipe["Sugar"] > 0:
+                        ingredients["Sugar"] = max(0, ingredients["Sugar"] - (recipe["Sugar"] / 10))
+        
+        return sold
+
     def game():
         global day
         global money
         global ingredients
+        global recipe
         while day <= 7:
             print("New Day...")
+            print(f"Day {day} begins!")
 
+            if day_cycle == False:
+                day = 1
+                day_cycle = True
+            
+            if day_cycle == True:
+                day += 1
 
             try:
-                LemonSet = float(input("What would you like to set your Lemonade price to?\n   (Note: You can change this later, and add decimals to the hundreths place, For example 2.99)\nNOTE: Don't add a Dollar Sign $\n"))
-                ask = False
+                if ask == True:
+                    LemonSet = float(input("What would you like to set your Lemonade price to?\n   (Note: You can change this later, and add decimals to the hundreths place, For example 2.99)\nNOTE: Don't add a Dollar Sign $\n"))
+                    ask = False
 
             except ValueError:
                 print("Please enter a valid number!")
@@ -93,7 +212,7 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
                 print(">>>")
                 print("-----------------------------------------------------------------------------------------------------------------")
                 try:
-                    what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day, (5) Quit.\n")
+                    what = input("What would you like to do? (1) Shop, (2) change recipe, (3) Change pricing, (4) Start the day.\n")
 
                 except KeyboardInterrupt:
                     print("\nExiting...")
@@ -119,7 +238,10 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
                         print(f"You have ${money:.2f} dollars.")
                         # Set globals in welcomeToShop module before calling shop
                         set_globals(money, ingredients)
-                        S()
+                        returned_money, returned_ingredients = S()
+                        # Sync back the updated values
+                        money = returned_money
+                        ingredients = returned_ingredients
                     elif enter.lower() == "n":
                         print("Cancelling...")
                     else:
@@ -129,34 +251,56 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
                 elif what == "2":
                     print("--------------------------------------------------")
                     print("You chose to change your recipe") # Recipe
+                    
+                    print("\n Recipe Guide:")
+                    print("  - Lemons add SOURNESS (customers who like sour will pay more)")
+                    print("  - Sugar adds SWEETNESS (customers who like sweet will pay more)")
+                    print("  - Balance is key! Too much of either may reduce customers.")
+                    print("  - Ice, Lemons, and Sugar are all REQUIRED to sell lemonade\n")
 
                     def price():
                         global Usage
+                        global recipe
                         recipe_items = []
                         while True:
                             try:
-                                item = input("What would you like to add to your recipe? (Type STOP to Stop)\n")
+                                item = input("What would you like to add to your recipe? (Lemons, Sugar, Ice - Type STOP to Stop)\n")
 
                             except KeyboardInterrupt:
                                 print("\nExiting...")
                                 sys.exit()
-                            try:
-                                if item.lower() not == "Lemons" or "Ice" or "Sugar" or "Cups":
-                                    amount = input("How much would you like to add?\n")
-
-                            except KeyboardInterrupt:
-                                print("\nExiting...")
-                                sys.exit()
-
-                            if item.lower() == 'STOP':
+                            
+                            if item.lower() == 'stop':
                                 break
+                                
+                            # Validate ingredient
+                            if item.lower() not in ("lemons", "sugar", "ice"):
+                                print("Please enter a valid ingredient (Lemons, Sugar, Ice)")
+                                continue
+                            
+                            try:
+                                amount = int(input("How much would you like to add?\n"))
+                                
+                            except ValueError:
+                                print("Please enter a valid number!")
+                                continue
 
-                            recipe_items.append(item)
-                            recipe_items.append(amount)
-                            print(f"Added: {amount}{item} ")
+                            except KeyboardInterrupt:
+                                print("\nExiting...")
+                                sys.exit()
+
+                            # Update recipe
+                            recipe[item.capitalize()] = amount
+                            
+                            recipe_items.append(item.capitalize())
+                            recipe_items.append(str(amount))
+                            print(f"Added: {amount} {item.capitalize()} ")
                             Usage["recipe"] = recipe_items
-                            print(f"Your Item was added to you Recipe: {Usage}")
+                            print(f"Your Recipe: {recipe}")
                     price()
+                    
+                    # Calculate customer preferences based on new recipe
+                    calculate_customer_preference()
 
                     
                 elif what == "3":
@@ -186,25 +330,52 @@ if p.lower() in ("y", "yes", "ok", "okay", "sure"):
                     #-------
                     def startday():
                         global day
+                        global money
+                        global ingredients
+                        
                         print("--------------------------------------------------")
+                        
+                        # Check if recipe is set
+                        if recipe["Lemons"] == 0 and recipe["Sugar"] == 0:
+                            print(" You need to set up your recipe first! Go to option 2.")
+                            return
+                        
+                        # Check if we have ingredients to sell
+                        if ingredients["Cups"] == 0 or ingredients["Ice"] == 0:
+                            print(" You need cups and ice to sell lemonade! Visit the shop.")
+                            return
+                        
                         print("Starting the day!")
-                        print("selling...")
+                        print("selling...", flush = True)
                         time.sleep(1)
-                        print("selling...")
+                        print("selling...", flush = True)
                         time.sleep(1)
-                        print("selling...")
+                        print("selling...", flush = True)
                         time.sleep(1)
+                        
+                        # Calculate customer preference
+                        potential_customers = calculate_customer_preference()
+                        
+                        if potential_customers > 0:
+                            # Sell to customers
+                            sold = sell_to_customers(LemonSet, potential_customers)
+                            print(f"\n You sold {sold} cups of lemonade!")
+                            print(f" You earned ${sold * LemonSet:.2f}")
+                            print(f" Current money: ${money:.2f}")
+                            print(f" Remaining ingredients: {ingredients}")
+                        else:
+                            print("\n No customers bought your lemonade! Check your recipe.")
+                        
                         day += 1
-                        print(f"Day {day} begins!")
+                        print(f"\nDay {day} begins!")
 
                     #-------
 
                     startday()
-                elif what == "5":
-                    print("Thanks for playing!")
-                    break
-                else:
-                    print("Please try again")
+
+                if ValueError:
+                    print("Please enter a valid number!")
+                    continue
 
         
             if day >= 7:
@@ -262,3 +433,4 @@ elif p.lower() == "n":
 else:
     print("Invalid input. Exiting...")
     sys.exit()
+
