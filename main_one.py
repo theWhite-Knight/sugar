@@ -154,6 +154,8 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
 
     def calculate_customer_preference():
         # Calculate customer preference based on recipe (Lemons = sour, Sugar = sweet)
+        # Ice, and Cups are required to sell, but don't affect preference, just the amount of customers you can sell to
+
         global customer_preferences
         
         lemons = recipe.get("Lemons", 0)
