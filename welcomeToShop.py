@@ -16,7 +16,7 @@ def set_globals(money_val, ingredients_val):
     global_ingredients = ingredients_val
 
 def S():
-    """Wrapper function that calls shop with global variables and syncs back"""
+    # Wrapper function that calls shop with global variables and syncs back
     global global_money, global_ingredients
     returned_money = shop(global_money, global_ingredients)
     global_money = returned_money
@@ -49,12 +49,13 @@ def shop(money,ingredients):
     when = 0
     print(f"\nYou have {ingredients}.")
     print(">>>")
-    print(f"You have {money} dollar(s).")
+    print(f"You have ${money:.2f} dollar(s).")
     print("\nYou have entered the shop!") 
     while when is not "exit":
         when = input("What would you like to purchase? (type the #) \
 (1) Lemons [1.99 per], (2) Sugar [0.60 per lb], (3) Cups [0.50 per], (4) Ice [0.99 per lb]:\n" "Enter EXIT to exit.\n") 
         print("------------------------------------------------------")
+
         # Math on the cost*Usercount for each ingredient >>
         if when == "1":
             print("You have decided to pick Lemons!")
@@ -64,6 +65,7 @@ def shop(money,ingredients):
             elif amount*lemonPrice <= money:
                 money = money-amount*lemonPrice
                 ingredients["Lemons"] += amount
+
         if when == "2":
             print("You have decided to pick Sugar!")
             amount = int(input("How much would you like to buy?:\n"))
@@ -72,6 +74,7 @@ def shop(money,ingredients):
             elif amount*sugarPrice <= money:
                 money = money-amount*sugarPrice
                 ingredients["Sugar"] += amount
+
         if when == "3":
             print("You have decided to pick Cups!")
             amount = int(input("How much would you like to buy?:\n"))
@@ -81,6 +84,7 @@ def shop(money,ingredients):
             elif amount*cupPrice <= money:
                 money = money-amount*cupPrice
                 ingredients["Cups"] += amount
+
         if when == "4":
             print("You have decided to pick Ice!")
             amount = int(input("How much would you like to buy?:\n"))
@@ -90,13 +94,14 @@ def shop(money,ingredients):
             elif amount*icePrice <= money:
                 money = money-amount*icePrice
                 ingredients["Ice"] += amount
-        if when.lower() == "exit":
-            print(f"Your balance is: {money}\n")
+                
+        if when.lower().strip() == "exit":
+            print(f"Your balance is: ${money:.2f}\n")
             print(">>>\n")
             return money
         print(f"\nYou have {ingredients}.")
         print(">>>")
-        print(f"You have {money} dollar(s).")       
+        print(f"You have ${money:.2f} dollar(s).")       
 #-------
 
 
