@@ -469,7 +469,7 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
 
                 try:
                     credit_roll = input("Would you like to roll Credits?\n")
-                    
+
                 except KeyboardInterrupt:
                     print("\nExiting...")
                     sys.exit()
@@ -532,3 +532,6 @@ else:
     print("Invalid input. Exiting...")
     sys.exit()
 
+
+# ----------------------------------------------------------------------------------------------------------
+# When I March through the Artic, The Possibilities are Infinite! - Quote from Matthew Seno (3/3/26): Pre-UIL
