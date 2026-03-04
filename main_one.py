@@ -89,7 +89,7 @@ Usage = {}
 ask = True
 start = True
 lemon = True
-day_cycle = False
+
 
 # Customer preference tracking
 customer_preferences = {
@@ -255,15 +255,6 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
         while day <= 7:
             print("New Day...")
             print(f"Day {day} begins!")
-
-            if day_cycle == True:
-                day += 1
-
-            if day_cycle == False:
-                day = 1
-                day_cycle = True
-        
-
             try:
                 if ask == True:
                     LemonSet = float(input("What would you like to set your Lemonade price to?\n   (Note: You can change this later, and add decimals to the hundreths place, For example 2.99)\nNOTE: Don't add a Dollar Sign $\n"))
