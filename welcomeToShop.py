@@ -30,7 +30,7 @@ def shop(money,ingredients):
     when = 0
     print(f"\nYou have {ingredients}.")
     print(">>>")
-    print(f"You have {money} dollar(s).")
+    print(f"You have {money:.2f} dollar(s).")
     print("\nYou have entered the shop!") 
     while when is not "exit":
         when = input("What would you like to purchase? (type the #) \
@@ -77,7 +77,7 @@ def shop(money,ingredients):
             return money
         print(f"\nYou have {ingredients}.")
         print(">>>")
-        print(f"You have {money} dollar(s).")       
+        print(f"You have {money:.2f} dollar(s).")       
 #-------
 # print("------------------------------------------------------")
 # The fear of long words is Hippopotomonstrosesquippedaliophobia.

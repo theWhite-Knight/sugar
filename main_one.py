@@ -44,11 +44,25 @@ def startday():
 
 def price():
     global Usage
-    recipe_items = []
+    recipe_items = {"lemon": 0,
+                    "sugar": 0,
+                    "ice": 0}
     while True:
         item = input("What would you like to add to your recipe? [lemons, sugar, ice, (exit)]\n")
-        if item.lower() == "exit":
+        if item.lower() == "lemon":
+            sour = int(input("How many would you like to add?"))
+            recipe_items["lemon"] = sour
+        elif item.lower() == "sugar":
+            sweet = int(input("How many would you like to add?"))
+            recipe_items["sugar"] = sweet
+        elif item.lower() == "ice":
+            cold = int(input("How many would you like to add?"))
+            recipe_items["ice"] = cold
+        elif item.lower() == "exit":
             print("Cancelling...")
+        else:
+            print("Enter a valid input...")
+            continue
         amount = input("How much would you like to add?\n")
         recipe_items.append(item + amount)
         print(f"Added: {item} ")
@@ -93,7 +107,7 @@ def game():
         print("New day...")
         print("------------------------------")
         game()
-        if money <= 0:
+        if cash <= 0:
             print("You lost!")
             print("------------------")
             print("GAME OVER!")
@@ -137,10 +151,4 @@ else:
     # print("1...")
     # time.sleep(1)
     game()
-
 #---------------------
-    
-
-
-
-
