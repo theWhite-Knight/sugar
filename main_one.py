@@ -209,7 +209,7 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
             customer_preferences["sour"] = 20
             customer_preferences["balanced"] = 20
             print(f"\n Customer Preference: BALANCED ({lemons} lemons, {sugar} sugar)")
-            
+
         
         # Total potential customers based on recipe quality
         return min(50, (lemons + sugar) * 2)
@@ -225,28 +225,37 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
             
         sold = 0
         # Customer tolerance: they'll pay more for sweeter/balanced drinks
+
         base_willingness = 3.00  # Base price customers are willing to pay
         
         # Adjust willingness based on preference match
+
         for pref_type, pref_count in customer_preferences.items():
             for _ in range(pref_count):
                 # Determine what customer is willing to pay
+
                 if pref_type == "sweet":
                     willingness = base_willingness + random.uniform(-0.50, 1.00)
+
                 elif pref_type == "sour":
                     willingness = base_willingness + random.uniform(-0.50, 0.75)
+
                 else:  # balanced
                     willingness = base_willingness + random.uniform(-0.25, 0.50)
+
                 
                 # Customer buys if price is within willingness
+                
                 if price <= willingness and ingredients["Cups"] > 0 and ingredients["Ice"] > 0:
                     sold += 1
                     money += price
                     ingredients["Cups"] -= 1
                     ingredients["Ice"] -= 1
                     # Use some lemons and sugar
+
                     if recipe["Lemons"] > 0:
                         ingredients["Lemons"] = max(0, ingredients["Lemons"] - (recipe["Lemons"] / 10))
+                        
                     if recipe["Sugar"] > 0:
                         ingredients["Sugar"] = max(0, ingredients["Sugar"] - (recipe["Sugar"] / 10))
         
