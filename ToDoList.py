@@ -37,7 +37,7 @@ def todo():
     print("Cheat Code Ideas")
     print("=" * 60)
     
-    print("EndOfLine    - Gives a lot of Money")
+    print("ENDOFLINE    - Gives a lot of Money")
     print("ADMIN_ABUSE  - Gives 100 ingredients of Lemons, Sugar, Ice, and Cups + Money")
     print("AreWeSerious?! - Times the Player income by 1.2x")
     

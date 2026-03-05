@@ -78,6 +78,20 @@
 # while ensuring that the inventory does not go negative. The // 10 is a simple way to represent the amount of lemons used per cup of lemonade sold, 
 # and max(0, ...) ensures that if the player runs out of lemons, it won't go into negative numbers, which could cause errors in the game.
 # -----
+# .get("Lemons", 0) - is used to safely access the number of lemons in the recipe dictionary. If the "Lemons" key does not exist in the recipe, it will return 0 instead of causing a KeyError.
+# This allows the game to handle cases where the player has not added any lemons to their recipe without crashing, and
+# it ensures that the customer preference calculation can still proceed even if certain ingredients are missing from the recipe.
+# -----
+# Datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S') - is used to display the current date and time in a specific format (day-month-year hours:minutes:seconds) when a new day begins in the game.
+# This adds a nice touch of realism to the game, allowing players to see the passage of time as they manage their lemonade stand over multiple days. It also enhances the 
+# immersive experience by providing a real-time element to the gameplay.
+# ------
+# .strftime('%Y-%m-%d %H:%M:%S') - is an alternative date format (year-month-day hours:minutes:seconds) that can be used to display the current date and time.
+# The choice of date format is a matter of preference, and both formats are commonly used. In this game, the '%d-%m-%Y' format is used to display the date in a more traditional day-first format, 
+# which may be more familiar to some players.
+# ------
+# .now() - is a method from the datetime module that returns the current local date and time. In this game, it is used to display the real-world date and time when a new day begins in the game.
+
 
 
 # >>>
@@ -85,13 +99,20 @@
 # >>>
 
 
+# print("ENDOFLINE    - Gives a lot of Money")
+# print("ADMIN_ABUSE  - Gives 100 ingredients of Lemons, Sugar, Ice, and Cups + Money")
+# print("AreWeSerious?! - Times the Player income by 1.2x")
 
 
+
+# --- Imports ---
 
 import time
 import sys
 import random
 import math
+import datetime
+
 
 # Import functions from other modules
 from ToDoList import todo
@@ -151,6 +172,7 @@ def calculate_customer_preference():
     
     lemons = recipe.get("Lemons", 0)
     sugar = recipe.get("Sugar", 0)
+    Ice = recipe.get("Ice", 0)
     
     # If no lemons or sugar, customers won't buy
     if lemons == 0 and sugar == 0 and ingredients["Ice"] > 0:
@@ -158,16 +180,19 @@ def calculate_customer_preference():
         return 0
     
     # Calculate ratio
-    total = lemons + sugar
+    total = lemons + sugar + Ice  # Total ingredients in the recipe (Ice is included to ensure customers prefer a recipe with ice, but it doesn't affect sweet/sour preference)
     if total == 0:
         return 0
 
     lemon_ratio = lemons / total
     sugar_ratio = sugar / total
-    
+    ice_ratio = Ice / total
+
     # Determine preference distribution
+
     if lemon_ratio > 0.7:
         # Very sour - mostly sour preference customers
+
         customer_preferences["sweet"] = int(10 * sugar_ratio)
         customer_preferences["sour"] = int(30 * lemon_ratio)
         customer_preferences["balanced"] = int(10 * (1 - abs(lemon_ratio - 0.5)))
@@ -175,6 +200,7 @@ def calculate_customer_preference():
 
     elif lemon_ratio > 0.5:
         # Sour - more sour preference
+
         customer_preferences["sweet"] = int(20 * sugar_ratio)
         customer_preferences["sour"] = int(25 * lemon_ratio)
         customer_preferences["balanced"] = int(15 * (1 - abs(lemon_ratio - 0.5)))
@@ -182,6 +208,7 @@ def calculate_customer_preference():
 
     elif sugar_ratio > 0.7:
         # Very sweet - mostly sweet preference customers
+
         customer_preferences["sweet"] = int(30 * sugar_ratio)
         customer_preferences["sour"] = int(10 * lemon_ratio)
         customer_preferences["balanced"] = int(10 * (1 - abs(sugar_ratio - 0.5)))
@@ -189,10 +216,27 @@ def calculate_customer_preference():
 
     elif sugar_ratio > 0.5:
         # Sweet - more sweet preference
+
         customer_preferences["sweet"] = int(25 * sugar_ratio)
         customer_preferences["sour"] = int(20 * lemon_ratio)
         customer_preferences["balanced"] = int(15 * (1 - abs(sugar_ratio - 0.5)))
         print(f"\n Customer Preference: SWEET ({lemons} lemons, {sugar} sugar)")
+
+    elif ice_ratio > 0.7:
+        # Icy - more balanced preference
+
+        customer_preferences["sweet"] = int(20 * sugar_ratio)
+        customer_preferences["sour"] = int(20 * lemon_ratio)
+        customer_preferences["balanced"] = int(20 * ice_ratio)
+        print(f"\n Customer Preference: ICY ({lemons} lemons, {sugar} sugar, {Ice} ice)")
+
+    elif ice_ratio > 0.5:
+        # Icy - more balanced preference
+
+        customer_preferences["sweet"] = int(15 * sugar_ratio)
+        customer_preferences["sour"] = int(15 * lemon_ratio)
+        customer_preferences["balanced"] = int(25 * ice_ratio)
+        print(f"\n Customer Preference: ICY ({lemons} lemons, {sugar} sugar, {Ice} ice)")
 
     else:
         # Balanced
@@ -203,7 +247,7 @@ def calculate_customer_preference():
 
     
     # Total potential customers based on recipe quality
-    return min(50, (lemons + sugar) * 2)
+    return min(50, (lemons + sugar + Ice) * 2)
 
 # ------
 
@@ -233,6 +277,12 @@ def sell_to_customers(price, potential_customers):
             elif pref_type == "sour":
                 willingness = base_willingness + random.uniform(-0.50, 0.75)
 
+            elif pref_type == "cold":
+                willingness = base_willingness + random.uniform(-0.25, 0.50)
+
+            elif pref_type == "balanced":
+                willingness = base_willingness + random.uniform(-0.25, 0.50)
+
             else:  # balanced
                 willingness = base_willingness + random.uniform(-0.25, 0.50)
 
@@ -243,7 +293,7 @@ def sell_to_customers(price, potential_customers):
                 sold += 1 
                 money += price
                 ingredients["Cups"] -= 1
-                ingredients["Ice"] -= 1
+                ingredients["Ice"] -= Usage.get("Ice", 0) // 2  # Only one ice gets used per cup sold, so divide by 2 to represent half an ice cube per cup
 
                 # Use some lemons and sugar
 
@@ -253,7 +303,10 @@ def sell_to_customers(price, potential_customers):
                 if recipe["Sugar"] > 0:
                     ingredients["Sugar"] = max(0, ingredients["Sugar"] - (recipe["Sugar"] // 10))
 
-    ingredients["Ice"] -= math.ceil(sell_to_customers(LemonSet, calculate_customer_preference())) * 0.5
+                if recipe["Ice"] > 0:
+                    ingredients["Ice"] = max(0, ingredients["Ice"] - (recipe["Ice"] // 10))
+
+    ingredients["Ice"] -= max(0, ingredients["Ice"] - (recipe["Ice"] // 10) * math.ceil(sell_to_customers(LemonSet, calculate_customer_preference())))
     ingredients["Cups"] -= 1 * sell_to_customers(LemonSet, calculate_customer_preference())
     ingredients["Lemons"] = max(0, ingredients["Lemons"] - (recipe["Lemons"] // 10) * math.ceil(sell_to_customers(LemonSet, calculate_customer_preference())))
     ingredients["Sugar"] = max(0, ingredients["Sugar"] - (recipe["Sugar"] // 10) * math.ceil(sell_to_customers(LemonSet, calculate_customer_preference())))
@@ -284,15 +337,26 @@ def game():
         print("New Day...")
         print(f"Day {day} begins!")
 
+        # Prints the Actual Time of Day In Real Life
+
+        print(f"The time of day is: {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}")
+        
+        print(">>>")
+        print(">>>")
+        print("The Time in-game is 8:00 AM. Time to set up your stand and get ready for the day!")
+
         try:
 
             while ask_user == True:
                 LemonSet = float(input("What would you like to set your Lemonade price to?\n   (Note: You can change this later, and add decimals to the hundreths place, For example 2.99)\nNOTE: Don't add a Dollar Sign $\n"))
+                print("--------------------------------------------------")
                 ask_user = False
 
 
         except ValueError:
             print("Please enter a valid number!")
+            print(">>>")
+            print(">>>")
             continue
 
         except KeyboardInterrupt:
@@ -302,12 +366,12 @@ def game():
         
         if isinstance(LemonSet, (int, float)) and LemonSet > 0:
 
-            print("------------------------------------------------------------------------------------------------------------------------------------")
+
             print(f"You have ${money:.2f} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day}. \nYour Base Recipe consists of {Usage}.\n(You can change your Recipe in the Menu)")
-            print(f"Your Lemonade is currently priced at ${LemonSet:.2f} per cup.\n(You can change your Price in the Menu)")
+            print(f"Your Lemonade is currently priced at ${LemonSet:.2f} per cup of Lemonade.\n(You can change your Price in the Menu)")
 
 
-            print("NOTE: You cannot start the sales day if your Lemonade Price equals 0, and if your Recipe doesn't have Lemons, Cups, Ice, and Sugar with a set amount of each\n")
+            print("NOTE: You cannot start the sales day if your Lemonade Price equals 0, and if your Recipe doesn't have Lemons, Ice, and Sugar with a set amount of each\n")
             print(">>>")
             print(">>>")
             print("-----------------------------------------------------------------------------------------------------------------")
@@ -318,9 +382,32 @@ def game():
                 print("\nExiting...")
                 sys.exit()
             #-------
+
+            # --- Cheat Codes --- #
+
+            if what.lower().strip() == "ENDOFLINE":
+                money += 1000
+                print("Cheat code activated: ENDOFLINE - You gained $1000!")
+
+            if what.lower().strip() == "ADMIN_ABUSE":
+                money += 500
+                ingredients["Lemons"] += 100
+                ingredients["Sugar"] += 100
+                ingredients["Cups"] += 100
+                ingredients["Ice"] += 100
+                print("Cheat code activated: ADMIN_ABUSE - You gained $500 and 100 of each ingredient!")
+
+            if what.lower().strip() == "areweserious?!":
+                money *= 1.2
+                print("Cheat code activated: AreWeSerious?! - Your Money is now Multiplied by 1.2x!")
+
+            # --- Todo List ---
+
             if what == "TODO":
                 todo()
             
+            # Actual Options
+
             elif what == "1":
                 # Access global variables from main_one
                 print("--------------------------------------------------")
@@ -364,6 +451,8 @@ def game():
                 print(">>>\n")
                 print("  - Lemons add SOURNESS (customers who like sour will pay more)")
                 print("  - Sugar adds SWEETNESS (customers who like sweet will pay more)")
+                print("  - Ice adds COLDNESS (customers who like cold will pay more)")
+                print("  - Balanced recipes (with a good mix of Lemons, Sugar, and Ice) will attract more customers overall")
                 print("  - Balance is key! Too much of either may reduce customers.")
                 print("  - Ice, Lemons, and Sugar are ALL REQUIRED to sell lemonade\n")
                 print("  - Once Cup is automatically used for one set of lemonade.")

@@ -1,5 +1,4 @@
-# ALex's take on "Ingredients and Money"
-#-------
+
 import sys
 #-------
 # Money
@@ -10,7 +9,7 @@ global_money = 200
 global_ingredients = {"Lemons": 0, "Sugar": 0, "Cups": 0, "Ice": 0}
 
 def set_globals(money_val, ingredients_val):
-    """Set global variables from main module"""
+    # Set global variables from main module
     global global_money, global_ingredients
     global_money = money_val
     global_ingredients = ingredients_val
