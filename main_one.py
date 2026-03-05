@@ -155,7 +155,6 @@ ingredients = {
 recipe = {
     "Lemons": 0,
     "Sugar": 0,
-    "Cups": 0,
     "Ice": 0
 }
 
@@ -252,73 +251,73 @@ def calculate_customer_preference():
 # ------
 
 def sell_to_customers(price, potential_customers):
-    # Process sales based on customer preferences and price
-    global money
-    global ingredients
-    
-    if ingredients["Ice"] == 0:
+    global money, ingredients, recipe, customer_preferences
+
+    if ingredients["Ice"] <= 0:
         print("\n WARNING: You need ice to sell lemonade!")
         return 0
-        
-    sold = 0
-    # Customer tolerance: they'll pay more for sweeter/balanced drinks
-
-    base_willingness = 3.00  # Base price customers are willing to pay
     
-    # Adjust willingness based on preference match
+    if ingredients["Cups"] <= 0:
+        print("\n WARNING: You need cups to sell lemonade!")
+        return 0
+    
+    if ingredients["Lemons"] <= 0:
+        print("\n WARNING: You need lemons to sell lemonade!")
+        return 0
+    
+    if ingredients["Sugar"] <= 0:
+        print("\n WARNING: You need sugar to sell lemonade!")
+        return 0
 
+    sold = 0
+
+    base_willingness = 3.00
+
+    # Loop through all customers based on preference distribution
     for pref_type, pref_count in customer_preferences.items():
         for _ in range(pref_count):
-            # Determine what customer is willing to pay
 
+            # Determine willingness to pay
             if pref_type == "sweet":
                 willingness = base_willingness + random.uniform(-0.50, 1.00)
-
             elif pref_type == "sour":
                 willingness = base_willingness + random.uniform(-0.50, 0.75)
-
-            elif pref_type == "cold":
-                willingness = base_willingness + random.uniform(-0.25, 0.50)
-
-            elif pref_type == "balanced":
-                willingness = base_willingness + random.uniform(-0.25, 0.50)
-
             else:  # balanced
                 willingness = base_willingness + random.uniform(-0.25, 0.50)
 
-            
-            # Customer buys if price is within willingness
-            
-            if price <= willingness and ingredients["Cups"] > 0 and ingredients["Ice"] > 0:
-                sold += 1 
+            # Check if customer buys
+            if (
+                price <= willingness
+                and ingredients["Cups"] > 0
+                and ingredients["Ice"] > 0
+            ):
+                sold += 1
                 money += price
+
+                # Use 1 cup and 1 ice per sale
                 ingredients["Cups"] -= 1
-                ingredients["Ice"] -= Usage.get("Ice", 0) // 2  # Only one ice gets used per cup sold, so divide by 2 to represent half an ice cube per cup
+                ingredients["Ice"] -= 1
 
-                # Use some lemons and sugar
+                # Use recipe-based amounts per cup
+                ingredients["Lemons"] = max(0, ingredients["Lemons"] - recipe["Lemons"])
+                ingredients["Sugar"] = max(0, ingredients["Sugar"] - recipe["Sugar"])
 
-                if recipe["Lemons"] > 0:
-                    ingredients["Lemons"] = max(0, ingredients["Lemons"] - (recipe["Lemons"] // 10))
-                    
-                if recipe["Sugar"] > 0:
-                    ingredients["Sugar"] = max(0, ingredients["Sugar"] - (recipe["Sugar"] // 10))
+                # Stop if we run out mid‑sales
+                if (
+                    ingredients["Cups"] <= 0
+                    or ingredients["Ice"] <= 0
+                    or ingredients["Lemons"] <= 0
+                    or ingredients["Sugar"] <= 0
+                ):
+                    return sold
 
-                if recipe["Ice"] > 0:
-                    ingredients["Ice"] = max(0, ingredients["Ice"] - (recipe["Ice"] // 10))
-
-    ingredients["Ice"] -= max(0, ingredients["Ice"] - (recipe["Ice"] // 10) * math.ceil(sell_to_customers(LemonSet, calculate_customer_preference())))
-    ingredients["Cups"] -= 1 * sell_to_customers(LemonSet, calculate_customer_preference())
-    ingredients["Lemons"] = max(0, ingredients["Lemons"] - (recipe["Lemons"] // 10) * math.ceil(sell_to_customers(LemonSet, calculate_customer_preference())))
-    ingredients["Sugar"] = max(0, ingredients["Sugar"] - (recipe["Sugar"] // 10) * math.ceil(sell_to_customers(LemonSet, calculate_customer_preference())))
     return sold
+# Rounds up the customer preferences
+# to the nearest whole number, since you can't have a fraction of a customer.
 
-
-
-# Rounds up the customer preferences to the nearest whole number, since you can't have a fraction of a customer.
-
-math.ceil(customer_preferences["sweet"])
-math.ceil(customer_preferences["sour"])
-math.ceil(customer_preferences["balanced"])
+customer_preferences["sweet"] = math.ceil(customer_preferences["sweet"])
+customer_preferences["sour"] = math.ceil(customer_preferences["sour"])
+customer_preferences["balanced"] = math.ceil(customer_preferences["balanced"])
 
 
 
@@ -552,7 +551,7 @@ def game():
                     if ingredients["Cups"] == 0 or ingredients["Ice"] == 0:
                         print(" You need cups and ice to sell lemonade! Visit the shop.")
                         return
-                    
+
                     # Flush is used to ensure that the "selling..." messages are printed immediately. If Flush isn't 'True' then the selling won't work.
                     # Flush itself doesn't actually do anything, but it forces the print statement to output immediately, which is important for the selling animation to work properly.
 
@@ -571,7 +570,7 @@ def game():
                     if potential_customers > 0:
                         # Sell to customers
 
-                        sold = sell_to_customers(LemonSet, potential_customers)
+                        sold = math.ceil(sell_to_customers(LemonSet, potential_customers))
                         print(f"\n You sold {sold:.2f} cups of lemonade!")
                         print(f" You earned ${sold * LemonSet:.2f}")
                         print(f" Current money: ${money:.2f}")
@@ -633,10 +632,12 @@ def game():
                 print(f"Final Ingredients: {ingredients}")
                 print(f"Final Lemonade Price: ${LemonSet:.2f}")
                 print("Exiting...")
+                time.sleep(0.75)
                 sys.exit()
             
             if credit_roll.lower().strip() in ("no", "n"):
                 print("Okay, Thanks for Playing!")
+                time.sleep(0.75)
                 print(f"Final Money: ${money:.2f}")
                 print(f"Final Day: {day}")
                 print(f"Final Recipe: {recipe}")
