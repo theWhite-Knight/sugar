@@ -121,7 +121,8 @@ from welcomeToShop import set_globals, S
 #-------
 
 # Global variables accessible across modules
-money = 200
+money = 250
+
 day = 1
 
 LemonSet = 0
@@ -332,16 +333,20 @@ def game():
     global money
     global ingredients
     global recipe
-    while day <= 7 or day >= 1:
+    global Usage
+
+    while day < 7:
         print("New Day...")
-        print(f"Day {day} begins!")
+        print(f"Day {day} begins!\n")
 
         # Prints the Actual Time of Day In Real Life
 
+        
         print(f"The time of day is: {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}")
         
         print(">>>")
-        print(">>>")
+        print(">>>\n")
+
         print("The Time in-game is 8:00 AM. Time to set up your stand and get ready for the day!")
 
         try:
@@ -408,7 +413,7 @@ def game():
             
             # Actual Options
 
-            elif what == "1":~
+            elif what == "1":
                 # Access global variables from main_one
                 print("--------------------------------------------------")
                 try:
@@ -635,6 +640,7 @@ def game():
             print("Exiting...")
             time.sleep(0.75)
             sys.exit()
+            
         
         if credit_roll.lower().strip() in ("no", "n"):
             print("Okay, Thanks for Playing!")
@@ -646,10 +652,11 @@ def game():
             print(f"Final Lemonade Price: ${LemonSet:.2f}")
             time.sleep(0.75)
             sys.exit()
+            
 
     if not (isinstance(LemonSet, (int, float)) and LemonSet > 0):
         print("Please try again!")
-        continue
+        
 
 
 
