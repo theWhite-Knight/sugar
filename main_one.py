@@ -332,7 +332,7 @@ def game():
     global money
     global ingredients
     global recipe
-    while day <= 7:
+    while day <= 7 or day >= 1:
         print("New Day...")
         print(f"Day {day} begins!")
 
@@ -408,7 +408,7 @@ def game():
             
             # Actual Options
 
-            elif what == "1":
+            elif what == "1":~
                 # Access global variables from main_one
                 print("--------------------------------------------------")
                 try:
@@ -592,64 +592,64 @@ def game():
                 continue
 
     
-        if day >= 7:
-            print("--------------------------------------------------")
-            print("You have survived 7 Days of Buisness")
+    if day >= 7:
+        print("--------------------------------------------------")
+        print("You have survived 7 Days of Buisness")
 
-            try:
-                credit_roll = input("Would you like to roll Credits?\n")
+        try:
+            credit_roll = input("Would you like to roll Credits?\n")
 
-            except KeyboardInterrupt:
-                print("\nExiting...")
-                sys.exit()
+        except KeyboardInterrupt:
+            print("\nExiting...")
+            sys.exit()
 
-            if credit_roll.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
-                print("Now rolling Credits...")
-                time.sleep(0.75)
-                print("Front End...")
-                time.sleep(0.75)
-                print("Jet")
-                time.sleep(0.75)
-                print("Alexandra")
-                time.sleep(0.75)
-                print("Back End...")
-                time.sleep(0.75)
-                print("Dillan")
-                time.sleep(0.75)
-                print("Evaristo")
-                time.sleep(0.75)
-                print("Testers...")
-                time.sleep(0.75)
-                print("Tristan")
-                time.sleep(0.75)
-                print("Evaristo")
-                time.sleep(0.75)
-                print("The End!")
-                time.sleep(0.75)
-                print("Thanks for Playing!")
-                print(f"Final Money: ${money:.2f}")
-                print(f"Final Day: {day}")
-                print(f"Final Recipe: {recipe}")
-                print(f"Final Ingredients: {ingredients}")
-                print(f"Final Lemonade Price: ${LemonSet:.2f}")
-                print("Exiting...")
-                time.sleep(0.75)
-                sys.exit()
-            
-            if credit_roll.lower().strip() in ("no", "n"):
-                print("Okay, Thanks for Playing!")
-                time.sleep(0.75)
-                print(f"Final Money: ${money:.2f}")
-                print(f"Final Day: {day}")
-                print(f"Final Recipe: {recipe}")
-                print(f"Final Ingredients: {ingredients}")
-                print(f"Final Lemonade Price: ${LemonSet:.2f}")
-                time.sleep(0.75)
-                sys.exit()
+        if credit_roll.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
+            print("Now rolling Credits...")
+            time.sleep(0.75)
+            print("Front End...")
+            time.sleep(0.75)
+            print("Jet")
+            time.sleep(0.75)
+            print("Alexandra")
+            time.sleep(0.75)
+            print("Back End...")
+            time.sleep(0.75)
+            print("Dillan")
+            time.sleep(0.75)
+            print("Evaristo")
+            time.sleep(0.75)
+            print("Testers...")
+            time.sleep(0.75)
+            print("Tristan")
+            time.sleep(0.75)
+            print("Evaristo")
+            time.sleep(0.75)
+            print("The End!")
+            time.sleep(0.75)
+            print("Thanks for Playing!")
+            print(f"Final Money: ${money:.2f}")
+            print(f"Final Day: {day}")
+            print(f"Final Recipe: {recipe}")
+            print(f"Final Ingredients: {ingredients}")
+            print(f"Final Lemonade Price: ${LemonSet:.2f}")
+            print("Exiting...")
+            time.sleep(0.75)
+            sys.exit()
+        
+        if credit_roll.lower().strip() in ("no", "n"):
+            print("Okay, Thanks for Playing!")
+            time.sleep(0.75)
+            print(f"Final Money: ${money:.2f}")
+            print(f"Final Day: {day}")
+            print(f"Final Recipe: {recipe}")
+            print(f"Final Ingredients: {ingredients}")
+            print(f"Final Lemonade Price: ${LemonSet:.2f}")
+            time.sleep(0.75)
+            sys.exit()
 
-        if not (isinstance(LemonSet, (int, float)) and LemonSet > 0):
-            print("Please try again!")
-            continue
+    if not (isinstance(LemonSet, (int, float)) and LemonSet > 0):
+        print("Please try again!")
+        continue
 
 
 
@@ -673,13 +673,13 @@ except KeyboardInterrupt:
 if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
     print("Good Luck!")
     print("Starting game...")
-    # time.sleep(1)
-    # print("3...")
-    # time.sleep(1)
-    # print("2...")
-    # time.sleep(1)
-    # print("1...")
-    # time.sleep(1)
+    time.sleep(1)
+    print("3...")
+    time.sleep(1)
+    print("2...")
+    time.sleep(1)
+    print("1...")
+    time.sleep(1)
     print("--------------------------------------------------------------------------")
     
     
@@ -689,7 +689,7 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
 
 
     
-    
+
 
     if start == True:
         game()
