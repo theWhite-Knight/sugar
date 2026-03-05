@@ -15,7 +15,7 @@
 # -----
 # Except KeyboardInterrupt is used to allow the user to exit the game gracefully by pressing Ctrl + C. When this happens, 
 # it will print "Exiting..." and then terminate the program using sys.exit(). It gets rid of the SyntaxError that would normally occur when a user tries to exit the game by pressing Ctrl + C, 
-# and allows for a cleaner exit experience, and doesn't look like we did something wrong.
+# and allows for a cleaner exit experience, and doesn't look like there are errors in the code.
 # -----
 # Except ValueError is used to catch cases where the user inputs something that cannot be converted to a number (like letters or symbols) 
 # when setting the lemonade price or adding ingredients to the recipe. When this happens, it will print "Please enter a valid number!" and prompt the user to try again, 
@@ -54,9 +54,15 @@
 # or start the sales day. The loop continues until the player has completed 7 days of business, at which point they can choose to roll credits or exit the game.
 # This structure provides a clear progression and allows for strategic decision-making as the player tries to maximize their profits and survive in the lemonade business.
 # -----
-
-
-
+# The customer preference calculation and sales processing are key components of the game that determine how successful the player's lemonade stand is each day. 
+# If the player creates a recipe that is too sour or too sweet, they may lose potential customers. 
+# Finding the right balance in the recipe is crucial for attracting a wider range of customers and maximizing sales. 
+# The randomness in customer willingness to pay adds an element of unpredictability, making the game more engaging and challenging. 
+# -----
+# [Item.capitalize()] is used to ensure that the ingredient names in the recipe are consistently formatted with a capital first letter (e.g., "Lemons" instead of "lemons").
+# This helps maintain a clean and professional appearance in the game's output when displaying the recipe and ingredients, 
+# and also ensures that the ingredient names match the keys used in the ingredients dictionary for accurate tracking and updates.
+# -----
 
 
 
@@ -64,6 +70,9 @@
 # >>>
 # >>>
 # >>>
+
+
+
 
 
 import time
@@ -121,9 +130,12 @@ recipe = {
 
 # NOTE: On the What Input, if you put "TODO" it will print up our TODO list.
 
+    # NOTE: The next section is all Customer Preference Calculation and Sales Processing. It calculates how many customers prefer sweet, sour, or balanced lemonade based on the recipe,
+    # and then processes sales based on the price and customer preferences, while also updating the player's money and inventory accordingly.
+
 def calculate_customer_preference():
     # Calculate customer preference based on recipe (Lemons = sour, Sugar = sweet)
-    # Ice, and Cups are required to sell, but don't affect preference, just the amount of customers you can sell to
+    # Ice, and Cups are required to sell, but don't affect customer preference, just the amount of customers you can sell to
 
     global customer_preferences
     
@@ -232,6 +244,8 @@ def sell_to_customers(price, potential_customers):
     
     return sold
 
+
+
 # -----
 
 def game():
@@ -244,9 +258,10 @@ def game():
         print(f"Day {day} begins!")
 
         try:
-            while ask == True:
+            if ask == True:
                 LemonSet = float(input("What would you like to set your Lemonade price to?\n   (Note: You can change this later, and add decimals to the hundreths place, For example 2.99)\nNOTE: Don't add a Dollar Sign $\n"))
-                ask == False
+                ask = False
+
 
         except ValueError:
             print("Please enter a valid number!")
@@ -344,7 +359,7 @@ def game():
                             
                         # Validate ingredient
 
-                        if item.lower() not in ("lemons", "sugar", "ice"):
+                        if item.lower().strip() not in ("lemons", "sugar", "ice"):
                             print("Please enter a valid ingredient (Lemons, Sugar, Ice)\n")
                             continue
                         
@@ -546,8 +561,7 @@ if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
     
     
 
-    # NOTE: Lines 154 to 245 is all Customer Preference Calculation and Sales Processing. It calculates how many customers prefer sweet, sour, or balanced lemonade based on the recipe,
-    # and then processes sales based on the price and customer preferences, while also updating the player's money and inventory accordingly.
+
 
 
 
