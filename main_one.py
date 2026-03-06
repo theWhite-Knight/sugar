@@ -266,6 +266,7 @@ def calculate_customer_preference():
         customer_preferences["sour_percent"] = (customer_preferences["sour"] / total_customers) * 100
         customer_preferences["balanced_percent"] = (customer_preferences["balanced"] / total_customers) * 100
         customer_preferences["cold_percent"] = (customer_preferences["cold"] / total_customers) * 100
+        
     else:
         customer_preferences["sweet_percent"] = 0
         customer_preferences["sour_percent"] = 0
@@ -279,6 +280,7 @@ def calculate_customer_preference():
 # ------
 
 def sell_to_customers(price, potential_customers):
+
     global money, ingredients, recipe, customer_preferences
 
     if ingredients["Ice"] <= 0:
