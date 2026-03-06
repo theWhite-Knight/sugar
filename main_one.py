@@ -310,9 +310,12 @@ def sell_to_customers(price, potential_customers):
 
             if pref_type == "sweet":
                 willingness = base_willingness + random.uniform(-0.50, 1.00)
+
             elif pref_type == "sour":
                 willingness = base_willingness + random.uniform(-0.50, 0.75)
+
             else:  # balanced
+
                 willingness = base_willingness + random.uniform(-0.25, 0.50)
 
             # Check if customer buys
@@ -443,6 +446,7 @@ def game():
 
             elif what == "1":
                 # Access global variables from main_one
+
                 print("--------------------------------------------------")
                 try:
                     enter = input("Would you like to enter the shop? (Y/N):\n")
@@ -453,8 +457,8 @@ def game():
 
                 if enter.lower().strip() == "y":
                     print("Entering shop...")
-                    # Update global variables before each shop call
 
+                    # Update global variables before each shop call
 
                     print(">>>")
                     print(">>>")
@@ -463,6 +467,7 @@ def game():
 
                     set_globals(money, ingredients)
                     returned_money, returned_ingredients = S()
+
                     # Sync back the updated values
 
                     money = returned_money
@@ -474,7 +479,7 @@ def game():
                 else:
                     print("Invalid input... \n")
                     #-------
-                # --------
+
             elif what == "2":
                 print("--------------------------------------------------")
                 print("You chose to change your recipe") # Recipe
@@ -591,11 +596,16 @@ def game():
 
                     print("Starting the day!")
                     print("selling...", flush = True)
+
                     time.sleep(1)
                     print("selling...", flush = True)
+
                     time.sleep(1)
                     print("selling...", flush = True)
+
                     time.sleep(1)
+
+
                     
                     # Calculate customer preference
 
@@ -703,13 +713,16 @@ if money <= 0:
 print("------------------------------")
 print("★~ The Lemonade Stand Game ~★")
 print("------------------------------")
+
 try:
     p = input("Would you like to play the game? (Y/N)\n")
 
 except KeyboardInterrupt:
     print("\nExiting...")
     sys.exit()
+
 #-------
+
 if p.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
     print("Good Luck!")
     print("Starting game...")
