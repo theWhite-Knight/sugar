@@ -209,7 +209,6 @@ def calculate_customer_preference():
     # Sweet / Sour / Balanced logic based on lemon and sugar ratios. The more sour the lemonade (higher lemon ratio), the more customers will prefer sour lemonade.
     # The more sweet the lemonade (higher sugar ratio), the more customers will prefer sweet lemonade.
     #  A balanced recipe will attract a more even distribution of customer preferences. 
-    # The exact numbers are determined by the ratios and some randomness to make it more fun and less robotic.
 
     if lemon_ratio > 0.7:
         customer_preferences["sweet"] = int(10 * sugar_ratio)
@@ -401,7 +400,12 @@ def game():
         
         if isinstance(LemonSet, (int, float)) and LemonSet > 0:
 
-
+            print(f"You have ${money} money!")
+            print("Time to pay Taxes!")
+            money -= 5
+            print("(The Government took 5 dollars from you for Property Taxes!)")
+            print("You think -> (Isn't that Thievery?)")
+            print("----------------------------------------")
             print(f"You have ${money:.2f} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day}. \nYour Base Recipe consists of {Usage}.\n(You can change your Recipe in the Menu)")
             print(f"Your Lemonade is currently priced at ${LemonSet:.2f} per cup of Lemonade.\n(You can change your Price in the Menu)")
 
