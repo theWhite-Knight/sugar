@@ -178,6 +178,7 @@ recipe = {
 
 def calculate_customer_preference():
     global customer_preferences
+    global total_customers
     
     lemons = recipe.get("Lemons", 0)
     sugar = recipe.get("Sugar", 0)
@@ -336,9 +337,11 @@ def sell_to_customers(price, potential_customers):
                 ingredients["Ice"] -= 1
 
                 # Use recipe-based amounts per cup
+
                 ingredients["Lemons"] = max(0, ingredients["Lemons"] - recipe["Lemons"])
                 ingredients["Sugar"] = max(0, ingredients["Sugar"] - recipe["Sugar"])
                 ingredients["Ice"] = max(0, ingredients["Ice"] - (recipe["Ice"] // 2))
+
 
                 # Stop if we run out mid‑sales
 
@@ -352,7 +355,7 @@ def sell_to_customers(price, potential_customers):
                 
     return sold
 
-
+total = customer_preferences["sweet"] + customer_preferences["cold"] + customer_preferences["sour"]
 
 # -----
 
@@ -367,8 +370,6 @@ def game():
     global Usage
 
     while day < 7:
-        print("New Day...")
-        
 
         # Prints the Actual Time of Day In Real Life
 
@@ -617,8 +618,8 @@ def game():
                         # Sell to customers
 
                         sold = math.ceil(sell_to_customers(LemonSet, potential_customers))
-                        print(f"\n You sold {sold:.2f} cups of lemonade!")
-                        print(f" You earned ${sold * LemonSet:.2f}")
+                        print(f"\n You sold {total_customers:.2f} cups of lemonade!")
+                        print(f" You earned ${total_customers * LemonSet:.2f}")
                         print(f" Current money: ${money:.2f}")
                         print(f" Remaining ingredients: {ingredients}")
                         print("------------------------------------------------------------------------------------------------------------------")
@@ -655,25 +656,25 @@ def game():
 
         if credit_roll.lower().strip() in ("y", "yes", "ok", "okay", "sure"):
             print("Now rolling Credits...")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Front End...")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Jet")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Alexandra")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Back End...")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Dillan")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Evaristo")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Testers...")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Tristan")
-            time.sleep(0.75)
+            time.sleep(1)
             print("Evaristo")
-            time.sleep(0.75)
+            time.sleep(1)
             print("The End!")
             time.sleep(2)
             print("Thanks for Playing!")
