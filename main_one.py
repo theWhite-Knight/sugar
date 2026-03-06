@@ -402,7 +402,7 @@ def game():
             print(f"You have ${money:.2f} Money. \nYour Inventory contains of {ingredients}. \nYou are on Day {day}. \nYour Base Recipe consists of {Usage}.\n(You can change your Recipe in the Menu)")
             print(f"Your Lemonade is currently priced at ${LemonSet:.2f} per cup of Lemonade.\n(You can change your Price in the Menu)")
 
-            print("\nNOTE: You cannot start the sales day if your Lemonade Price equals 0, and if your Recipe doesn't have Lemons, Ice, and Sugar with a set amount of each")
+            print("\nNOTE: You cannot start the sales day if your Lemonade Price equals 0, and / or if your Recipe doesn't have Lemons, Ice, and Sugar with a set amount of each")
             print("NOTE: After selling, you will have to scroll up to see your full sales results, customer preferences, and remaining inventory\n")
             print(">>>")
             print(">>>")
