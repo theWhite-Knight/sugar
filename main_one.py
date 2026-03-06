@@ -190,6 +190,7 @@ def calculate_customer_preference():
         return 0
 
     total = lemons + sugar + Ice
+
     if total == 0:
         return 0
 
@@ -332,6 +333,7 @@ def sell_to_customers(price, potential_customers):
                 # Use recipe-based amounts per cup
                 ingredients["Lemons"] = max(0, ingredients["Lemons"] - recipe["Lemons"])
                 ingredients["Sugar"] = max(0, ingredients["Sugar"] - recipe["Sugar"])
+                ingredients["Ice"] = max(0, ingredients["Ice"] - (recipe["Ice"] // 2))
 
                 # Stop if we run out mid‑sales
 
