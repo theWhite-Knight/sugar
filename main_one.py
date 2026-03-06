@@ -184,6 +184,7 @@ def calculate_customer_preference():
     Ice = recipe.get("Ice", 0)
 
     # Basic validation
+
     if lemons == 0 or sugar == 0 or Ice == 0:
         print("\n WARNING: Your recipe must include Lemons, Sugar, and Ice!")
         return 0
@@ -197,6 +198,7 @@ def calculate_customer_preference():
     ice_ratio = Ice / total
 
     # Reset preferences
+    
     customer_preferences["sweet"] = 0
     customer_preferences["sour"] = 0
     customer_preferences["balanced"] = 0
@@ -242,7 +244,7 @@ def calculate_customer_preference():
     customer_preferences["cold"] = int(20 * ice_ratio)
 
     # Round to whole customers
-    
+
     customer_preferences["sweet"] = math.ceil(customer_preferences["sweet"])
     customer_preferences["sour"] = math.ceil(customer_preferences["sour"])
     customer_preferences["cold"] = math.ceil(customer_preferences["cold"])
